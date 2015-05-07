@@ -1,5 +1,6 @@
 # ! /usr/bin/env python
 """An example Python script
+
 >>> q = QuickRef('argument value')
 >>> q.param()
 The value of the main function argument is 'argument value'
@@ -50,6 +51,7 @@ Welcome to Ed's World!!!
 {'weird': ['grasshoppers', 'horse', 'eels'], 'fruit': ['apples', 'bananas', 'oranges'], 'meals': ['hamburgers', 'pizza', 'tacos']}
 32 plus 76 equals 108
 Result 108 is over one hundred
+
 """
 
 import sys, os  # load common libraries
@@ -191,6 +193,8 @@ sdfdsf""")
 
 
 if __name__ == "__main__":
-    sys.exit(main('Ed'))
+    import doctest
+    doctest.testmod(verbose=True)
+    # sys.exit(main('Ed'))
 
 
