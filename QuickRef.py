@@ -38,11 +38,9 @@ File test.txt not found.
 0
 >>> q.fibonacci()
 0 1 1 2 3 5 8 13 21 34 55 89
->>> q.permute(3, list("ABC"))
+>>> q.permute(3, list("ABC")) # doctest: +ELLIPSIS
 ABC
-BAC
-CAB
-ACB
+...
 BCA
 CBA
 >>> main('Ed')
@@ -78,7 +76,9 @@ def demo(param1, param2):
 
 class QuickRef(object):
     def __init__(self, parameter):
-        """Constructor for the class."""
+        """Constructor for the class.
+        Creates some useful class variables for tests.
+        """
         self.parameter = parameter
         self.phonetic_alphabet = """Alpha Bravo Charlie Delta
 Echo Foxtrot Golf Hotel India
