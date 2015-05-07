@@ -38,11 +38,14 @@ File test.txt not found.
 0
 >>> q.fibonacci()
 0 1 1 2 3 5 8 13 21 34 55 89
->>> q.permute(3, list("ABC")) # doctest: +ELLIPSIS
-ABC
+>>> q.permute(4, list("ABCD")) # doctest: +ELLIPSIS
+ABCD
+BACD
 ...
-BCA
-CBA
+BDAC
+DBAC
+ABDC
+BADC
 >>> main('Ed')
 Welcome to Ed's World!!!
 ['apples', 'hamburgers', 'grasshoppers']
@@ -119,7 +122,7 @@ sdfdsf""")
             print("'else' is executed when a 'for' loop finishes without a 'break'.")
 
     def traffic(self):
-        """Print formatting; traffic_light['blue'] raises KeyError."""
+        """Print formatting; example of try/catch for exceptions: traffic_light['blue'] raises KeyError."""
         print("Traffic light yellow is #{tl_num}".format(tl_num=self.traffic_light['yellow']))
         try:
             print(self.traffic_light['blue'])
