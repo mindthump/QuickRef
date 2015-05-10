@@ -1,44 +1,36 @@
 """ This 'whiteboard' file is for experimentation and concept validation only; it can change at any time.
 
->>> deck = Solution()
->>> deck.deal() # doctest: +ELLIPSIS
-Unshuffled:
-...
-Shuffled:
-...
+Regular Expressions
+Manipulating files
 
 """
-
-from BitVector import BitVector
-import random
-import copy
+import pprint
+import subprocess
+from datetime import date
+import os
 
 
 class Solution:
-
     def __init__(self):
-        self.deck = []
-        self.stack = ['8', 'K', '3', '10', '2', '7', '9', '5', 'Q', '4', 'A', '6', 'J']
-        for suit in "CHSD":
-            self.deck.append("A" + suit)
-            for pip in range(2,11):
-                self.deck.append(str(pip) + suit)
-            for pip in "JQK":
-                self.deck.append(str(pip) + suit)
+        pass
 
-    def deal(self):
-        print("Unshuffled:")
-        print(self.deck)
-        shuffled = copy.copy(self.deck)
-        random.shuffle(shuffled)
-        print("Shuffled:")
-        print(shuffled)
-        dbv = BitVector(size = 52)
-        for y in shuffled:
-            dbv[self.deck.index(y)] = 1
-            print(dbv)
+    def subprocess_ls(self):
+        foo = subprocess.check_output(['ls', '-l'])
+        x = foo.split("\n")
+        pprint.pprint(x)
+
+    def walkies(self):
+        for path, dirs, files in os.walk(os.path.abspath(os.path.join(os.getcwd(), os.pardir))):
+            pass
+
+    def process_file_with_generators(self):
+        with open("/Users/ed/Google Drive/test_data.csv") as data_file:
+            first_col = (line.split(',')[0] for line in data_file)
+            middle = (line.split('-')[2] for line in first_col)
+            for index, value in enumerate(middle):
+                print "{}: {}".format(index, value)
 
 
 if __name__ == '__main__':
-    deck = Solution()
-    deck.deal()
+    s = Solution()
+    s.process_file_with_generators()

@@ -111,10 +111,11 @@ asfd
 sdfdsf""")
         # BitVector stuff
         self.deck = []
+        # For "Eight Kings Chased" setup
         self.stack = ['8', 'K', '3', '10', '2', '7', '9', '5', 'Q', '4', 'A', '6', 'J']
         for suit in "CHSD":
             self.deck.append("A" + suit)
-            for pip in range(2,11):
+            for pip in range(2, 11):
                 self.deck.append(str(pip) + suit)
             for pip in "JQK":
                 self.deck.append(str(pip) + suit)
@@ -216,6 +217,8 @@ sdfdsf""")
     def deal(self):
         print("Unshuffled:")
         print(self.deck)
+        # Make a (shallow) copy so we don't shuffle the "template" deck.
+        # shuffle() works in-place on an existing list, returns None
         shuffled = copy.copy(self.deck)
         random.shuffle(shuffled)
         print("Shuffled:")
