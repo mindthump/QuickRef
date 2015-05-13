@@ -35,6 +35,7 @@ class Solution:
     def count_unique(self, m):
         """Counting unique items in an iterable
         Super useful for doctests: pprint orders dict by the keys!
+        >>> Solution('x').count_unique("GOOGLE")
         >>> pprint.pprint(dict(Solution('x').count_unique("GOOGLE")))
         {'E': 1, 'G': 2, 'L': 1, 'O': 2}
 

@@ -1,11 +1,10 @@
 # ! /usr/bin/env python
 """An example Python script
-
 """
 
-# load common libraries
 import sys
 import os
+import doctest
 import random
 import copy
 import subprocess
@@ -14,35 +13,14 @@ import BitVector
 import collections
 
 
-def main(parameter):
-    """Mixed single/double quote, formatting, concatenation, repetition.
-    >>> main('Ed') # doctest: +ELLIPSIS
-    Welcome to Ed's World!!!
-    ['apples', 'grasshoppers', 'hamburgers']
-    {'fruit': ['apples', 'bananas', 'oranges'],
-     'meals': ['hamburgers', 'pizza', 'tacos'],
-     'weird': ['grasshoppers', 'horse', 'eels']}
-    32 plus 76 equals 108
-    Result 108 is over one hundred
-    """
-    print("Welcome to {name}'s".format(name=parameter) + " World" + '!' * 3)  # use print function
-    food = [['apples', 'bananas', 'oranges'], ['hamburgers', 'pizza', 'tacos'],
-            ['grasshoppers', 'horse', 'eels'], 27.0345, demo]  # list can hold other data types, incl. function refs
-    print(sorted([element[0] for element in food if type(element) is list]))  # list comprehension w/filter clause
-    food_types = ['fruit', 'meals', 'weird']
-    food_dict = dict(zip(food_types, food))  # interweave elements, coerce to dictionary
-    pprint.pprint(food_dict)
-    food[4](32, 76)  # a variable can hold a function reference
-
-
-def demo(param1, param2):
-    results = param1 + param2
-    print("{0} plus {2} equals {1}".format(param1, results, param2))  # nameless but ordered
-    x = "is" if results > 100 else "is not"  # trinary(ish)
-    print("Result %s %s over one hundred" % (results, x))  # old-style needs a tuple
+def main():
+    doctest.testmod(verbose=True)
 
 
 def create_test_file(filename):
+    """This creates a small file with repeated lines
+    for methods finding unique lines
+    """
     with open(filename, mode='w') as fw:
         fw.write("""klasdflhf
 sdfdsf
@@ -52,6 +30,38 @@ asdfasdf
 klasdflhf
 asfd
 sdfdsf""")
+
+
+def demo(parameter):
+    """Mixed single/double quote, formatting, concatenation, repetition.
+    >>> demo('Ed')
+    Welcome to Ed's World!!!
+    ['apples', 'grasshoppers', 'hamburgers']
+    {'fruit': ['apples', 'bananas', 'oranges'],
+     'meals': ['hamburgers', 'pizza', 'tacos'],
+     'weird': ['grasshoppers', 'horse', 'eels']}
+    32 plus 76 equals 108
+    Result 108 is over one hundred
+    """
+    print("Welcome to {name}'s".format(name=parameter) + " World" + '!' * 3)  # use print function
+    # Lists can hold other data types, including function references
+    food = [['apples', 'bananas', 'oranges'], ['hamburgers', 'pizza', 'tacos'],
+            ['grasshoppers', 'horse', 'eels'], 27.0345, function_reference]
+    print(sorted([element[0] for element in food if type(element) is list]))  # list comprehension w/filter clause
+    food_types = ['fruit', 'meals', 'weird']
+    food_dict = dict(zip(food_types, food))  # interweave elements, coerce to dictionary
+    pprint.pprint(food_dict)
+    food[4](32, 76)  # a variable can hold a function reference
+
+
+def function_reference(param1, param2):
+    """This function appears as a reference buried in a list in demo()
+    """
+    results = param1 + param2
+    print("{0} plus {2} equals {1}".format(param1, results, param2))  # nameless but ordered
+    x = "is" if results > 100 else "is not"  # trinary(ish)
+    print("Result %s %s over one hundred" % (results, x))  # old-style needs a tuple
+
 
 
 class QuickRef(object):
@@ -68,23 +78,17 @@ Romeo Sierra Tango Uniform
 Victor Whiskey X-ray Yankee Zulu"""
         self.traffic_light = {'red': 1, 'yellow': 2, 'green': 3}
         self.alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        # BitVector stuff
+        # A deck of cards, each represented by a suit and a rank character.
+        # The deck is in standard new-deck sort order.
         self.deck = []
         # For "Eight Kings Chased" setup
-        self.stack = ['8', 'K', '3', '10', '2', '7', '9', '5', 'Q', '4', 'A', '6', 'J']
+        # self.stack = ['8', 'K', '3', '10', '2', '7', '9', '5', 'Q', '4', 'A', '6', 'J']
         for suit in "CHSD":
             self.deck.append("A" + suit)
-            for pip in range(2, 11):
-                self.deck.append(str(pip) + suit)
-            for pip in "JQK":
-                self.deck.append(str(pip) + suit)
-
-    def param(self):
-        """Simple printing of the parameters.
-        >>> QuickRef('argument value').param()
-        The value of the main function argument is 'argument value'
-        """
-        print("The value of the main function argument is '{}'".format(self.parameter))
+            for rank in range(2, 11):
+                self.deck.append(str(rank) + suit)
+            for rank in "JQK":
+                self.deck.append(str(rank) + suit)
 
     def phonetics(self, character):
         """Mangling lines; dict comprehension.
@@ -316,7 +320,4 @@ Victor Whiskey X-ray Yankee Zulu"""
 
 
 if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod(verbose=True)
-    # sys.exit(QuickRef('x').fuckedfile())
+    sys.exit(main())
