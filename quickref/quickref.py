@@ -3,7 +3,9 @@
 
 """
 
-import sys, os  # load common libraries
+# load common libraries
+import sys
+import os
 import random
 import copy
 import subprocess
@@ -16,7 +18,9 @@ def main(parameter):
     >>> main('Ed') # doctest: +ELLIPSIS
     Welcome to Ed's World!!!
     ['apples', 'grasshoppers', 'hamburgers']
-    ...
+    {'fruit': ['apples', 'bananas', 'oranges'],
+     'meals': ['hamburgers', 'pizza', 'tacos'],
+     'weird': ['grasshoppers', 'horse', 'eels']}
     32 plus 76 equals 108
     Result 108 is over one hundred
     """
@@ -26,7 +30,7 @@ def main(parameter):
     print(sorted([element[0] for element in food if type(element) is list]))  # list comprehension w/filter clause
     food_types = ['fruit', 'meals', 'weird']
     food_dict = dict(zip(food_types, food))  # interweave elements, coerce to dictionary
-    print(food_dict)
+    pprint.pprint(food_dict)
     food[4](32, 76)  # a variable can hold a function reference
 
 
@@ -35,6 +39,18 @@ def demo(param1, param2):
     print("{0} plus {2} equals {1}".format(param1, results, param2))  # nameless but ordered
     x = "is" if results > 100 else "is not"  # trinary(ish)
     print("Result %s %s over one hundred" % (results, x))  # old-style needs a tuple
+
+
+def create_test_file(filename):
+    with open(filename, mode='w') as fw:
+        fw.write("""klasdflhf
+sdfdsf
+asdfasdf
+asfd
+asdfasdf
+klasdflhf
+asfd
+sdfdsf""")
 
 
 class QuickRef(object):
@@ -51,15 +67,6 @@ Romeo Sierra Tango Uniform
 Victor Whiskey X-ray Yankee Zulu"""
         self.traffic_light = {'red': 1, 'yellow': 2, 'green': 3}
         self.alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        with open("test.txt", mode='w') as fw:
-            fw.write("""klasdflhf
-sdfdsf
-asdfasdf
-asfd
-asdfasdf
-klasdflhf
-asfd
-sdfdsf""")
         # BitVector stuff
         self.deck = []
         # For "Eight Kings Chased" setup
@@ -70,7 +77,6 @@ sdfdsf""")
                 self.deck.append(str(pip) + suit)
             for pip in "JQK":
                 self.deck.append(str(pip) + suit)
-
 
     def param(self):
         """Simple printing of the parameters.
@@ -127,21 +133,18 @@ sdfdsf""")
         """Simple file I/O, and using a set to eliminate duplicates.
         Test exception for missing file.
         >>> filename = "test.txt"
-        >>> q = QuickRef('x')
-        >>> q.unique(filename)
-        asfd
-        klasdflhf
-        asdfasdf
-        sdfdsf
+        >>> create_test_file(filename)
+        >>> QuickRef('x').unique(filename)
+        ['asdfasdf', 'asfd', 'klasdflhf', 'sdfdsf']
         >>> os.remove(filename)
-        >>> q.unique(filename)
-        File test.txt not found.
+        >>> QuickRef('x').unique(filename) # doctest: +ELLIPSIS
+        File ... not found.
 
         """
         try:
             with open(os.path.join(os.getcwd(), filename), 'r') as fr:
                 ulines = {line.strip() for line in fr}
-            for l in ulines: print(l)  # single line is not idiomatic but sometimes useful
+            pprint.pprint(sorted(ulines))
         except IOError:
             print("File {fn} not found.".format(fn=filename))
 
@@ -180,7 +183,7 @@ sdfdsf""")
         """
         i = 0
         rownum = 0
-        while (len(str_to_decode)):
+        while len(str_to_decode):
             char_to_decode = str_to_decode[-1]
             str_to_decode = str_to_decode[0:-1]
             idx = self.alphabet.index(char_to_decode)
@@ -231,13 +234,14 @@ sdfdsf""")
                 # Cool python swap trick
                 array[j], array[n - 1] = array[n - 1], array[j]
 
-    def deal(self):
+    def get_shuffled_deck(self):
         """Deal out and track cards from a shuffled deck.
-        Can we be more specific with ellipsis on shuffled deck?
-        >>> QuickRef('x').deal() # doctest: +ELLIPSIS
+        Can't match a shuffled deck, but we can verify all of the cards are there with a BitVector
+        >>> QuickRef('x').get_shuffled_deck() # doctest: +ELLIPSIS
         Unshuffled:
         ['AC', '2C', '3C', '4C', '5C', '6C', '7C', '8C', '9C', '10C', 'JC', 'QC', 'KC', 'AH', '2H', '3H', '4H', '5H', '6H', '7H', '8H', '9H', '10H', 'JH', 'QH', 'KH', 'AS', '2S', '3S', '4S', '5S', '6S', '7S', '8S', '9S', '10S', 'JS', 'QS', 'KS', 'AD', '2D', '3D', '4D', '5D', '6D', '7D', '8D', '9D', '10D', 'JD', 'QD', 'KD']
         Shuffled:
+        1111111111111111111111111111111111111111111111111111
         ...
 
         :return: None
@@ -249,12 +253,13 @@ sdfdsf""")
         shuffled = copy.copy(self.deck)
         random.shuffle(shuffled)
         print("Shuffled:")
-        print(shuffled)
         import BitVector
-        dbv = BitVector.BitVector(size = 52)
+
+        dbv = BitVector.BitVector(size=52)
         for y in shuffled:
             dbv[self.deck.index(y)] = 1
-            print(dbv)
+        print(dbv)
+        return shuffled
 
     def subprocess_ls(self):
         foo = subprocess.check_output(['ls', '-l'])
@@ -291,5 +296,6 @@ sdfdsf""")
 
 if __name__ == "__main__":
     import doctest
+
     doctest.testmod(verbose=True)
     # sys.exit(QuickRef('x').fuckedfile())
