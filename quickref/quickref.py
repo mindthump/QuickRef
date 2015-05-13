@@ -89,7 +89,7 @@ def phonetics(character):
     >>> phonetics('L')
     'Lima'
     >>> phonetics('%')
-    ''
+    '$$ ERROR: character not found.'
     """
     phonetics = []
     for line in phonetic_alphabet.splitlines():
@@ -99,7 +99,7 @@ def phonetics(character):
         c = translation[character]
         return c
     except KeyError:
-        return ''
+        return '$$ ERROR: character not found.'
 
 
 def significant():
@@ -117,20 +117,6 @@ def significant():
         print("'else' is executed when a 'for' loop finishes without a 'break'.")
 
 
-def traffic():
-    """Print formatting; example of try/catch for exceptions: traffic_light['blue'] raises KeyError.
-    >>> traffic()
-    Traffic light yellow is #2
-    No 'blue' light.
-    """
-
-    print("Traffic light yellow is #{tl_num}".format(tl_num=traffic_light['yellow']))
-    try:
-        print(traffic_light['blue'])
-    except KeyError:
-        print("No 'blue' light.")
-
-
 def unique(filename):
     """Simple file I/O, and using a set to eliminate duplicates.
     Test exception for missing file.
@@ -139,7 +125,6 @@ def unique(filename):
     ['asdfasdf', 'asfd', 'klasdflhf', 'sdfdsf']
     >>> os.remove(filename); unique(filename) # doctest: +ELLIPSIS
     File ... not found.
-
     """
     try:
         with open(os.path.join(os.getcwd(), filename), 'r') as fr:
@@ -249,8 +234,6 @@ def get_shuffled_deck():
     Shuffled:
     1111111111111111111111111111111111111111111111111111
     ...
-
-    :return: None
     """
     print("Unshuffled:")
     print(deck)
@@ -289,8 +272,6 @@ def walkies():
      ('/Users/ed/PycharmProjects/QuickRef/quickref/__pycache__',
       [],
       ['quickref.cpython-34.pyc'])]
-
-    :return:
     """
     contents = [x for x in os.walk(os.path.abspath(os.getcwd()))]
     # print(path, dirs, files)
