@@ -279,7 +279,7 @@ def walkies():
 
 
 def process_file_with_generators():
-    """Look at generators expressions. I wish I had looked at this before the interview :(
+    """Look at generators expressions. I wish I had reviewed this more before the interview :(
     >>> process_file_with_generators() # doctest: +ELLIPSIS
     0: 4853
     1: 4991
@@ -296,6 +296,7 @@ def process_file_with_generators():
     with open("/Users/ed/Google Drive/test_data.csv") as data_file:
         # The inner generator breaks the line by commas and returns the first element,
         # the outer generator breaks that by dashes and returns the third element
+        # The 'next' outers and inners are produced only when they are actually used
         inner = (line.split(',')[0] for line in data_file)
         outer = (line.split('-')[2] for line in inner)
         for index, value in enumerate(outer):
