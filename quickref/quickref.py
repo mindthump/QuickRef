@@ -10,6 +10,7 @@ import random
 import copy
 import subprocess
 import pprint
+import BitVector
 import collections
 
 
@@ -129,15 +130,14 @@ Victor Whiskey X-ray Yankee Zulu"""
         except KeyError:
             print("No 'blue' light.")
 
-    def unique(self, filename):
+    @staticmethod
+    def unique(filename):
         """Simple file I/O, and using a set to eliminate duplicates.
         Test exception for missing file.
-        >>> filename = "test.txt"
-        >>> create_test_file(filename)
-        >>> QuickRef('x').unique(filename)
+        Also, this is a static method since it doesn't actually refer to any class stuff.
+        >>> filename = "test.txt"; create_test_file(filename); QuickRef.unique(filename)
         ['asdfasdf', 'asfd', 'klasdflhf', 'sdfdsf']
-        >>> os.remove(filename)
-        >>> QuickRef('x').unique(filename) # doctest: +ELLIPSIS
+        >>> os.remove(filename); QuickRef.unique(filename) # doctest: +ELLIPSIS
         File ... not found.
 
         """
@@ -148,7 +148,7 @@ Victor Whiskey X-ray Yankee Zulu"""
         except IOError:
             print("File {fn} not found.".format(fn=filename))
 
-    def encode_rownum(self, rownum_to_encode):
+    def encode_rownum(self, row_number_to_encode):
         """encode_rownum() and decode_url() functions could be used in a URL shortener, essentially base62 encoding
         >>> QuickRef('x').encode_rownum(62)
         '10'
@@ -157,16 +157,16 @@ Victor Whiskey X-ray Yankee Zulu"""
         >>> QuickRef('x').encode_rownum(0)
         '0'
         """
-        if rownum_to_encode == 0:
+        if row_number_to_encode == 0:
             return '0'
         encoded_url = ''
         base = len(self.alphabet)
-        while (rownum_to_encode):
-            q, r = divmod(rownum_to_encode, base)
+        while row_number_to_encode:
+            q, r = divmod(row_number_to_encode, base)
             # str() in case something "looks" numeric
             # prepend the encoded_url char so it's easier to decode
             encoded_url = str(self.alphabet[r]) + str(encoded_url)
-            rownum_to_encode = q
+            row_number_to_encode = q
         return encoded_url
 
     def decode_url(self, str_to_decode):
@@ -204,7 +204,8 @@ Victor Whiskey X-ray Yankee Zulu"""
                 break
         print(outstr.strip())  # remove trailing space
 
-    def fibonacci_generator(self):
+    @staticmethod
+    def fibonacci_generator():
         """Returns next number in fibonacci series."""
         n = 0
         prev = 1  # a trick to bootstrap the series
@@ -253,22 +254,42 @@ Victor Whiskey X-ray Yankee Zulu"""
         shuffled = copy.copy(self.deck)
         random.shuffle(shuffled)
         print("Shuffled:")
-        import BitVector
-
         dbv = BitVector.BitVector(size=52)
         for y in shuffled:
             dbv[self.deck.index(y)] = 1
         print(dbv)
         return shuffled
 
-    def subprocess_ls(self):
+    @staticmethod
+    def subprocess_ls():
+        """Run a simple subprocess. the doctest is pretty stupid because 'ls' output is unpredictable.
+        >>> QuickRef.subprocess_ls()  # doctest: +ELLIPSIS
+        ['...'']
+        """
         foo = subprocess.check_output(['ls', '-l'])
         x = foo.split("\n")
         pprint.pprint(x)
 
-    def walkies(self):
-        for path, dirs, files in os.walk(os.path.abspath(os.path.join(os.getcwd(), os.pardir))):
-            pass
+    @staticmethod
+    def walkies():
+        """
+        >>> d = QuickRef.walkies(); pprint.pprint(d)
+        [('/Users/ed/PycharmProjects/QuickRef/quickref',
+          ['__pycache__'],
+          ['__init__.py',
+           'quickref.py',
+           'webdriver.py',
+           'whiteboard.py',
+           'whiteboard.pyc']),
+         ('/Users/ed/PycharmProjects/QuickRef/quickref/__pycache__',
+          [],
+          ['quickref.cpython-34.pyc'])]
+
+        :return:
+        """
+        contents = [x for x in os.walk(os.path.abspath(os.getcwd()))]
+        # print(path, dirs, files)
+        return contents
 
     def process_file_with_generators(self):
         """Look at generators expressions. I wish I had looked at this before the interview :(
