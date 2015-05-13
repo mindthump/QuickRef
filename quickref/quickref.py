@@ -17,16 +17,16 @@ def main():
     doctest.testmod(verbose=True)
 
 # Create some useful variables for tests.
+alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 phonetic_alphabet = """Alpha Bravo Charlie Delta
 Echo Foxtrot Golf Hotel India
 Juliet Kilo Lima Mike
 November Oscar Papa Queen
 Romeo Sierra Tango Uniform
 Victor Whiskey X-ray Yankee Zulu"""
-traffic_light = {'red': 1, 'yellow': 2, 'green': 3}
-alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 # A deck of cards, each represented by a suit and a rank character.
-# The deck is in standard new-deck sort order.
+# The deck is originally in standard new-deck sort order.
 deck = []
 # For "Eight Kings Chased" setup
 # stack = ['8', 'K', '3', '10', '2', '7', '9', '5', 'Q', '4', 'A', '6', 'J']
@@ -54,7 +54,7 @@ sdfdsf""")
 
 
 def demo(parameter):
-    """Mixed single/double quote, formatting, concatenation, repetition.
+    """Some basic demos.
     >>> demo('Ed')
     Welcome to Ed's World!!!
     ['apples', 'grasshoppers', 'hamburgers']
@@ -64,15 +64,25 @@ def demo(parameter):
     32 plus 76 equals 108
     Result 108 is over one hundred
     """
-    print("Welcome to {name}'s".format(name=parameter) + " World" + '!' * 3)  # use print function
-    # Lists can hold other data types, including function references
+
+    # Mixed single/double quote, formatting, concatenation, repetition.
+    print("Welcome to {name}'s".format(name=parameter) + " World" + '!' * 3)
+
+    # Lists and dicts can hold non-homogeneous types, including function references
     food = [['apples', 'bananas', 'oranges'], ['hamburgers', 'pizza', 'tacos'],
             ['grasshoppers', 'horse', 'eels'], 27.0345, function_reference]
-    print(sorted([element[0] for element in food if type(element) is list]))  # list comprehension w/filter clause
+
+    # list comprehension w/filter clause, using the element's type
+    print(sorted([element[0] for element in food if type(element) is list]))
+
+    # Interweaving elements with zip(), coerced to a dictionary
     food_types = ['fruit', 'meals', 'weird']
-    food_dict = dict(zip(food_types, food))  # interweave elements, coerce to dictionary
+    food_dict = dict(zip(food_types, food))
     pprint.pprint(food_dict)
-    food[4](32, 76)  # a variable can hold a function reference
+
+    # a variable can hold a function reference, and it is called when it looks like a function
+    # (i.e., with parenthesis and signature-appropriate arguments)
+    food[4](32, 76)
 
 
 def function_reference(param1, param2):
@@ -92,9 +102,13 @@ def phonetics(character):
     '$$ ERROR: character not found.'
     """
     phonetics = []
+    # Rip the lines themselves apart...
     for line in phonetic_alphabet.splitlines():
-        phonetics += line.split()
+        # ...then rip apart the words on each line
+        phonetics.extend(line.split())
+    # Pack it all into a dict
     translation = {alphabet[x]: phonetics[x - 36] for x in range(36, 62)}
+    # Using try/except to catch a KeyError; could also use dict.get() or a defaultdict to supply a default value
     try:
         c = translation[character]
         return c
