@@ -275,20 +275,13 @@ def subprocess_ls():
 
 def walkies():
     """
-    >>> d = walkies(); pprint.pprint(d)
-    [('/Users/ed/PycharmProjects/QuickRef/quickref',
-      ['__pycache__'],
-      ['__init__.py',
-       'quickref.py',
-       'webdriver.py',
-       'whiteboard.py',
-       'whiteboard.pyc']),
-     ('/Users/ed/PycharmProjects/QuickRef/quickref/__pycache__',
-      [],
-      ['quickref.cpython-34.pyc'])]
+    >>> d = walkies(); pprint.pprint(d) # doctest: +ELLIPSIS
+    [('/Users/ed/PycharmProjects/QuickRef',
+    ...
+
+    :return: [(path, [dirs], [files]), ...]
     """
     contents = [x for x in os.walk(os.path.abspath(os.getcwd()))]
-    # print(path, dirs, files)
     return contents
 
 
