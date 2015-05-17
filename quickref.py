@@ -310,32 +310,41 @@ def process_file_with_generators():
             print("{}: {}".format(index, value))
 
 
-def elgoog(reverse_string):
-    """Calling a class method
+def elgoog(string_to_reverse):
+    """Multiple ways to reverse a string
     >>> elgoog("GOOGLE")
     ELGOOG
     ELGOOG
     ELGOOG
+    ELGOOG
     """
-    print(reverse_string[::-1])
+    print(string_to_reverse[::-1])
     concat_before_start = ""
-    as_list_insert_before_first = []
-    for i in reverse_string:
+    insert_at_front_of_list = []
+    slice_into_front_of_list = []
+    for i in string_to_reverse:
+        # Not great - produces a new immutable string each time
         concat_before_start = i + concat_before_start
-        as_list_insert_before_first.insert(0, i)
+        # These produce lists that need to be joined
+        insert_at_front_of_list.insert(0, i)
+        slice_into_front_of_list[:0] = i
     print(concat_before_start)
-    print(''.join(as_list_insert_before_first))
+    print(''.join(insert_at_front_of_list))
+    print(''.join(slice_into_front_of_list))
 
 def count_unique(m):
     """Counting unique items in an iterable
     Super useful for doctests: pprint orders dict by the keys!
-    >>> pprint.pprint(dict(count_unique("GOOGLE")))
-    {'E': 1, 'G': 2, 'L': 1, 'O': 2}
+    >>> count_unique("GOOGLE")
+    Counter({'O': 2, 'G': 2, 'E': 1, 'L': 1})
+    Counter({'O': 2, 'G': 2, 'E': 1, 'L': 1})
     """
-    d = collections.Counter()
+    d1 = collections.Counter(m)
+    pprint.pprint(d1)
+    d2 = collections.Counter()
     for letter in m:
-        d[letter] += 1
-    return d
+        d2[letter] += 1
+    pprint.pprint(d2)
 
 
 if __name__ == "__main__":
