@@ -1,8 +1,13 @@
 """ This 'whiteboard' file is for experimentation and concept validation only; it can change at any time."""
 
-import os, sys
+import os
+import sys
 import pprint
 import collections
+import re
+
+
+filename = "/Users/ed/lorem.txt"
 
 
 def main():
@@ -10,32 +15,20 @@ def main():
     doctest.testmod(verbose=True)
 
 
-def elgoog(reverse_string):
-    """Calling a class method
-    >>> elgoog("GOOGLE")
-    ELGOOG
-    ELGOOG
-    ELGOOG
+def unique_via_comp():
     """
-    print(reverse_string[::-1])
-    concat_before_start = ""
-    as_list_insert_before_first = []
-    for i in reverse_string:
-        concat_before_start = i + concat_before_start
-        as_list_insert_before_first.insert(0, i)
-    print(concat_before_start)
-    print(''.join(as_list_insert_before_first))
+    Dictionaries are output by pprint in key order. The options are to keep the output on one line.
+    >>> pprint.pprint(dict(unique_via_comp()), compact=True, width=999999)
+    {'ac': 7, 'arcu': 7, 'eget': 10, 'et': 10, 'in': 11, 'mauris': 7, 'nec': 8, 'non': 7, 'vel': 8}
 
-def count_unique(m):
-    """Counting unique items in an iterable
-    Super useful for doctests: pprint orders dict by the keys!
-    >>> pprint.pprint(dict(count_unique("GOOGLE")))
-    {'E': 1, 'G': 2, 'L': 1, 'O': 2}
     """
-    d = collections.Counter()
-    for letter in m:
-        d[letter] += 1
-    return d
+    c = collections.Counter()
+    with open(filename) as f:
+        for l in f:
+            w = re.findall(r"[\w']+", l)
+            c.update(w)
+    del c['']
+    return c.most_common(9)
 
 
 if __name__ == '__main__':
