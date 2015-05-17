@@ -5,22 +5,23 @@ import sys
 import pprint
 import collections
 import re
+import doctest
 
 
 filename = "/Users/ed/lorem.txt"
 
 
 def main():
-    import doctest
     doctest.testmod(verbose=True)
 
 
 def constant_factory(value):
     """
     Using a defaultdict with a constant for missing values
+    '%(name)s %(action)s to %(object)s' % d
     >>> d = collections.defaultdict(constant_factory('<missing>')); \
     d.update(name='John', action='ran'); \
-    '%(name)s %(action)s to %(object)s' % d
+    "{name} {action} to {object}".format(**d)
     'John ran to <missing>'
     """
     return lambda: value
