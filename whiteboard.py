@@ -45,4 +45,7 @@ def unique_via_comp():
 
 
 if __name__ == '__main__':
+
+    print(''.join(['{} = "{}"\n'.format(key, os.environ[key]) for key in os.environ.keys()]))
+
     sys.exit(main())
