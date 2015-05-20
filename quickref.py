@@ -11,6 +11,7 @@ import subprocess
 import pprint
 import BitVector
 import collections
+import itertools
 
 
 def main():
@@ -25,22 +26,11 @@ November Oscar Papa Queen
 Romeo Sierra Tango Uniform
 Victor Whiskey X-ray Yankee Zulu"""
 
-# A deck of cards, each represented by a suit and a rank character.
-# The deck is originally in standard new-deck sort order.
-deck = []
-# For "Eight Kings Chased" setup
-# stack = ['8', 'K', '3', '10', '2', '7', '9', '5', 'Q', '4', 'A', '6', 'J']
-for suit in "CHSD":
-    deck.append("A" + suit)
-    for rank in range(2, 11):
-        deck.append(str(rank) + suit)
-    for rank in "JQK":
-        deck.append(str(rank) + suit)
-
 
 def create_test_file(filename):
     """This creates a small file with repeated lines
     for methods finding unique lines
+    DEMONSTRATES: writing to files in a context manager, multi-line strings
     """
     with open(filename, mode='w') as fw:
         fw.write(""" klasdflhf
@@ -55,6 +45,7 @@ sdfdsf""")
 
 def demo(parameter):
     """ Some basic demos.
+    DEMONSTRATES: String functions, lists, dicts, comprehensions, function references, zipping
     >>> demo('Ed')
     Welcome to Ed's World!!!
     ['apples', 'grasshoppers', 'hamburgers']
@@ -87,6 +78,7 @@ def demo(parameter):
 
 def function_reference(param1, param2):
     """ This function appears as a reference buried in a list in demo()
+    DEMONSTRATES: trinary, old-style formatting
     """
     results = param1 + param2
     print("{0} plus {2} equals {1}".format(param1, results, param2))  # nameless but ordered
@@ -96,7 +88,7 @@ def function_reference(param1, param2):
 
 
 def phonetics(character):
-    """ Mangling lines; dict comprehension.
+    """ DEMONSTRATES: mangling strings; dict comprehension, try/catch.
     >>> phonetics('L')
     'Lima'
     >>> phonetics('%')
@@ -118,7 +110,8 @@ def phonetics(character):
 
 
 def significant():
-    """ Do stuff with the second word in 'significant' lines: comprehensions with conditionals.
+    """ Do stuff with the second word in 'significant' lines.
+    DEMONSTRATES: comprehensions with conditionals, for/else.
     >>> significant()
     Here is where we do stuff with the Foxtrot
     Here is where we do stuff with the Oscar
@@ -133,9 +126,8 @@ def significant():
 
 
 def unique(filename):
-    """ Simple file I/O, and using a set to eliminate duplicates.
-    Test exception for missing file.
-    Also, this is a static method since it doesn't actually refer to any class stuff.
+    """ Unique rows in a file
+    DEMONSTRATES: set comprehension to eliminate duplicates, simple file read, try/catch (missing file exception).
     >>> filename = "test.txt"; create_test_file(filename); unique(filename)
     ['asdfasdf', 'asfd', 'klasdflhf', 'sdfdsf']
     >>> os.remove(filename); unique(filename) # doctest: +ELLIPSIS
@@ -151,6 +143,7 @@ def unique(filename):
 
 def encode_rownum(row_number_to_encode):
     """ encode_rownum() and decode_url() functions could be used in a URL shortener, essentially base62 encoding
+    DEMONSTRATES: recursion, divmod to get both integer quotient and remainder
     >>> encode_rownum(62)
     '10'
     >>> encode_rownum(1234567)
@@ -173,15 +166,13 @@ def encode_rownum(row_number_to_encode):
 
 def decode_url(str_to_decode):
     """ Inverse of encode_rownum()
+    DEMONSTRATES: string indexing, power function
     >>> decode_url('5ban')
     1234567
     >>> decode_url('10')
     62
     >>> decode_url('0')
     0
-
-    :param str_to_decode: the shortened URL (or whatever)
-    :return: row number
     """
     i = 0
     rownum = 0
@@ -196,6 +187,7 @@ def decode_url(str_to_decode):
 
 def fibonacci():
     """ Use the fibonacci_generator() to get one element at a time.
+    DEMONSTRATES: using generator functions
     >>> fibonacci()
     0 1 1 2 3 5 8 13 21 34 55 89
     """
@@ -209,7 +201,9 @@ def fibonacci():
 
 
 def fibonacci_generator():
-    """ Returns next number in fibonacci series."""
+    """ Returns next number in fibonacci series.
+    DEMONSTRATES: generators (yield statement)
+    """
     n = 0
     prev = 1  # a trick to bootstrap the series
     while True:
@@ -219,6 +213,7 @@ def fibonacci_generator():
 
 def permute(n, array):
     """ Permutations using Heap's Algorithm.
+    DEMONSTRATES: recursion, python no-temp swap trick
     >>> permute(4, list("ABCD")) # doctest: +ELLIPSIS
     ABCD
     BACD
@@ -236,36 +231,13 @@ def permute(n, array):
             permute(n - 1, array)
             # Swap with nth element: ith element if even, first element if odd
             j = i if (n % 2 == 0) else 0
-            # Cool python swap trick
+            # Cool python swap trick, no temporary variable needed
             array[j], array[n - 1] = array[n - 1], array[j]
 
 
-def get_shuffled_deck():
-    """ Deal out and track cards from a shuffled deck.
-    Can't match a shuffled deck, but we can verify all of the cards are there with a BitVector
-    >>> get_shuffled_deck() # doctest: +ELLIPSIS
-    Unshuffled:
-    ['AC', '2C', '3C', '4C', '5C', '6C', '7C', '8C', '9C', '10C', 'JC', 'QC', 'KC', 'AH', '2H', '3H', '4H', '5H', '6H', '7H', '8H', '9H', '10H', 'JH', 'QH', 'KH', 'AS', '2S', '3S', '4S', '5S', '6S', '7S', '8S', '9S', '10S', 'JS', 'QS', 'KS', 'AD', '2D', '3D', '4D', '5D', '6D', '7D', '8D', '9D', '10D', 'JD', 'QD', 'KD']
-    Shuffled:
-    1111111111111111111111111111111111111111111111111111
-    ...
-    """
-    print("Unshuffled:")
-    print(deck)
-    # Make a (shallow) copy so we don't shuffle the "template" deck.
-    # shuffle() works in-place on an existing list, returns None
-    shuffled = copy.copy(deck)
-    random.shuffle(shuffled)
-    print("Shuffled:")
-    dbv = BitVector.BitVector(size=52)
-    for y in shuffled:
-        dbv[deck.index(y)] = 1
-    print(dbv)
-    return shuffled
-
-
 def subprocess_ls():
-    """ Run a simple subprocess. the doctest is pretty stupid because 'ls' output is unpredictable.
+    """ Run a simple subprocess. The doctest is pretty stupid because 'ls' output is unpredictable.
+    DEMONSTRATES: subprocess (to run system commands).
     >>> subprocess_ls()  # doctest: +ELLIPSIS
     ['...']
     """
@@ -276,6 +248,7 @@ def subprocess_ls():
 
 def walkies():
     """
+    DEMONSTRATES: os.walk function.
     >>> d = walkies(); pprint.pprint(d) # doctest: +ELLIPSIS
     [('/Users/ed/PycharmProjects/QuickRef',
     ...
@@ -288,6 +261,7 @@ def walkies():
 
 def process_file_with_generators():
     """ Look at generators expressions. I wish I had reviewed this more before the interview :(
+    DEMONSTRATES: generator expressions, print.format with tuple.
     >>> process_file_with_generators() # doctest: +ELLIPSIS
     0: 4853
     1: 4991
@@ -316,6 +290,7 @@ def process_file_with_generators():
 
 def elgoog(string_to_reverse):
     """ Multiple ways to reverse a string
+    DEMONSTRATES: Negative count string slice, concatenation, slice into front
     >>> elgoog("GOOGLE")
     ELGOOG
     ELGOOG
@@ -336,16 +311,19 @@ def elgoog(string_to_reverse):
     print(''.join(insert_at_front_of_list))
     print(''.join(slice_into_front_of_list))
 
+
 def count_unique(m):
     """ Counting unique items in an iterable
-    Super useful for doctests: pprint orders dicts by the
-    keys (coerce to plain dict first if necessary)
+    Super useful for doctests: pprint orders dicts by the keys (coerce to plain dict first if necessary)
+    DEMONSTRATES: collections.Counter (dict subclass)
     >>> count_unique("GOOGLE")
     {'E': 1, 'G': 2, 'L': 1, 'O': 2}
     {'E': 1, 'G': 2, 'L': 1, 'O': 2}
     """
+    # All items at once
     d1 = collections.Counter(m)
     pprint.pprint(dict(d1))
+    # One item at a time
     d2 = collections.Counter()
     for letter in m:
         d2[letter] += 1
@@ -355,8 +333,57 @@ def count_unique(m):
 def constant_factory(value):
     """ This function is used with a defaultdict to provide a constant for missing values.
     It is tested in a separate unit test: test_constant_factory.py
+    DEMONSTRATES: unittests, and a really dumb lambda function.
     """
     return lambda: value
+
+
+class Deck(object):
+    """ A deck of cards, each represented by a suit and a rank character.
+    The deck is originally in standard new-deck sort order.
+    """
+
+    def __init__(self):
+        """ Make an new, unshuffled deck.
+        DEMONSTRATES: nested list comprehension.
+        """
+        self.deck = [rank + suit for suit in "CHSD" for rank in "A23456789TJQK"]
+
+    def shuffle(self):
+        """ Shuffle the deck, and show the cards are all still there with a BitVector.
+        DEMONSTRATES: random.shuffle, copy.copy, BitVectors
+        >>> d = Deck(); print("Unshuffled:\\n{}".format(d.deck)) # doctest: +ELLIPSIS
+        Unshuffled:
+        ['AC', '2C', '3C', '4C', '5C', ..., 'JH', 'QH', 'KH', 'AS', ..., 'QS', 'KS', 'AD', '2D', ..., 'JD', 'QD', 'KD']
+        >>> d.shuffle()
+        Shuffled:
+        1111111111111111111111111111111111111111111111111111
+        """
+        # random.shuffle() works in-place on an existing list, returns None
+        # Make a (shallow) copy so we don't shuffle the current deck.
+        shuffled = copy.copy(self.deck)
+        random.shuffle(shuffled)
+        # Account for each card in the current deck
+        print("Shuffled:")
+        dbv = BitVector.BitVector(size=52)
+        for y in shuffled:
+            dbv[self.deck.index(y)] = 1
+        print(dbv)
+        # Replace the current deck with the shuffled deck.
+        self.deck = shuffled
+
+    @classmethod
+    def get_stacked_deck(cls):
+        """ BONUS! A card deck trick setup. Search for "eight kings chased" to see what it means.
+        DEMONSTRATES: itertools.cycle, list.append, class method (does not need an instance).
+        """
+        deck = []
+        suits = itertools.cycle("CHSD")
+        ranks = itertools.cycle(['8', 'K', '3', '10', '2', '7', '9', '5', 'Q', '4', 'A', '6', 'J'])
+        for card in range(52):
+            deck.append(str(next(ranks)) + str(next(suits)))
+        # pprint.pprint(deck, width=60, compact=True)
+        return deck
 
 
 if __name__ == "__main__":
