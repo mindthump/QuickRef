@@ -266,9 +266,9 @@ def get_shuffled_deck():
 def subprocess_ls():
     """Run a simple subprocess. the doctest is pretty stupid because 'ls' output is unpredictable.
     >>> subprocess_ls()  # doctest: +ELLIPSIS
-    ['...'']
+    ['...']
     """
-    foo = subprocess.check_output(['ls', '-l'])
+    foo = subprocess.check_output(['ls', '-l'], universal_newlines=True)
     x = foo.split("\n")
     pprint.pprint(x)
 
@@ -334,17 +334,18 @@ def elgoog(string_to_reverse):
 
 def count_unique(m):
     """Counting unique items in an iterable
-    Super useful for doctests: pprint orders dict by the keys!
+    Super useful for doctests: pprint orders dicts by the
+    keys (coerce to plain dict first if necessary)
     >>> count_unique("GOOGLE")
-    Counter({'O': 2, 'G': 2, 'E': 1, 'L': 1})
-    Counter({'O': 2, 'G': 2, 'E': 1, 'L': 1})
+    {'E': 1, 'G': 2, 'L': 1, 'O': 2}
+    {'E': 1, 'G': 2, 'L': 1, 'O': 2}
     """
     d1 = collections.Counter(m)
-    pprint.pprint(d1)
+    pprint.pprint(dict(d1))
     d2 = collections.Counter()
     for letter in m:
         d2[letter] += 1
-    pprint.pprint(d2)
+    pprint.pprint(dict(d2))
 
 
 if __name__ == "__main__":

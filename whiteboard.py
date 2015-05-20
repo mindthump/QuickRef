@@ -7,7 +7,6 @@ import collections
 import re
 import doctest
 
-
 filename = "/Users/ed/lorem.txt"
 
 
@@ -45,7 +44,6 @@ def unique_via_comp():
 
 
 if __name__ == '__main__':
-
     pprint.pprint(['{} = "{}"'.format(k, v) for k, v in os.environ.items()], width=99)
 
     sys.exit(main())
