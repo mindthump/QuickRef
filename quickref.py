@@ -91,7 +91,8 @@ def function_reference(param1, param2):
     results = param1 + param2
     print("{0} plus {2} equals {1}".format(param1, results, param2))  # nameless but ordered
     x = "is" if results > 100 else "is not"  # trinary(ish)
-    print("Result %s %s over one hundred" % (results, x))  # old-style needs a tuple
+    # old-style formatting needs a tuple, but see process_file_with_generators() below
+    print("Result %s %s over one hundred" % (results, x))
 
 
 def phonetics(character):
@@ -306,8 +307,11 @@ def process_file_with_generators():
         # The 'next' outers and inners are produced only when they are actually used
         inner = (line.split(',')[0] for line in data_file)
         outer = (line.split('-')[2] for line in inner)
-        for index, value in enumerate(outer):
-            print("{}: {}".format(index, value))
+        # Enumerate returns two values (index, value) but since we only supply
+        # one variable name it is stored as a tuple. The new-style string format
+        # requires the tuple to be unpacked with "*".
+        for t in enumerate(outer):
+            print("{}: {}".format(*t))
 
 
 def elgoog(string_to_reverse):
