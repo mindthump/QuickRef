@@ -301,7 +301,7 @@ def process_file_with_generators():
     56: 4842
     57: 4205
     """
-    with open("/Users/ed/Google Drive/test_data.csv") as data_file:
+    with open("test_data.csv") as data_file:
         # The inner generator breaks the line by commas and returns the first element,
         # the outer generator breaks that by dashes and returns the third element
         # The 'next' outers and inners are produced only when they are actually used
