@@ -376,13 +376,14 @@ class Deck(object):
     def get_stacked_deck(cls):
         """ BONUS! A card deck trick setup. Search for "eight kings chased" to see what it means.
         DEMONSTRATES: itertools.cycle, list.append, class method (does not need an instance).
+        >>> pprint.pprint(Deck.get_stacked_deck(), compact=True, width=99999)  # doctest: +ELLIPSIS
+        ['8C', 'KH', '3S', 'TD', '2C', '7H', '9S', ..., '5S', 'QD', '4C', 'AH', '6S', 'JD']
         """
         deck = []
         suits = itertools.cycle("CHSD")
-        ranks = itertools.cycle(['8', 'K', '3', '10', '2', '7', '9', '5', 'Q', '4', 'A', '6', 'J'])
+        ranks = itertools.cycle(['8', 'K', '3', 'T', '2', '7', '9', '5', 'Q', '4', 'A', '6', 'J'])
         for card in range(52):
             deck.append(str(next(ranks)) + str(next(suits)))
-        # pprint.pprint(deck, width=60, compact=True)
         return deck
 
 
