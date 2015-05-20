@@ -14,18 +14,6 @@ def main():
     doctest.testmod(verbose=True)
 
 
-def constant_factory(value):
-    """
-    Using a defaultdict with a constant for missing values
-    '%(name)s %(action)s to %(object)s' % d
-    >>> d = collections.defaultdict(constant_factory('<missing>')); \
-    d.update(name='John', action='ran'); \
-    "{name} {action} to {object}".format(**d)
-    'John ran to <missing>'
-    """
-    return lambda: value
-
-
 def unique_via_comp():
     """
     Dictionaries are output by pprint in key order. The options are to keep the output on one line.

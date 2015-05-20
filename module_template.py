@@ -7,10 +7,13 @@
 Welcome to Ed's World!!!
 """
 
-import sys, os  # load common libraries
+# load common libraries
+import sys
+import os
+import pprint
 
 def main(parameter_list):
-    print(parameter_list)
+    pprint.pprint(parameter_list)
 
 class Example(object):
     def __init__(self, parameters):

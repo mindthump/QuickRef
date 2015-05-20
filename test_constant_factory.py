@@ -1,6 +1,6 @@
 from unittest import TestCase
 import collections
-from whiteboard import constant_factory
+from quickref import constant_factory
 
 __author__ = 'ed'
 

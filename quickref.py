@@ -1,5 +1,5 @@
 # ! /usr/bin/env python
-"""An example Python script
+""" An example Python script
 """
 
 import sys
@@ -43,7 +43,7 @@ def create_test_file(filename):
     for methods finding unique lines
     """
     with open(filename, mode='w') as fw:
-        fw.write("""klasdflhf
+        fw.write(""" klasdflhf
 sdfdsf
 asdfasdf
 asfd
@@ -54,7 +54,7 @@ sdfdsf""")
 
 
 def demo(parameter):
-    """Some basic demos.
+    """ Some basic demos.
     >>> demo('Ed')
     Welcome to Ed's World!!!
     ['apples', 'grasshoppers', 'hamburgers']
@@ -86,7 +86,7 @@ def demo(parameter):
 
 
 def function_reference(param1, param2):
-    """This function appears as a reference buried in a list in demo()
+    """ This function appears as a reference buried in a list in demo()
     """
     results = param1 + param2
     print("{0} plus {2} equals {1}".format(param1, results, param2))  # nameless but ordered
@@ -96,7 +96,7 @@ def function_reference(param1, param2):
 
 
 def phonetics(character):
-    """Mangling lines; dict comprehension.
+    """ Mangling lines; dict comprehension.
     >>> phonetics('L')
     'Lima'
     >>> phonetics('%')
@@ -118,7 +118,7 @@ def phonetics(character):
 
 
 def significant():
-    """Do stuff with the second word in 'significant' lines: comprehensions with conditionals.
+    """ Do stuff with the second word in 'significant' lines: comprehensions with conditionals.
     >>> significant()
     Here is where we do stuff with the Foxtrot
     Here is where we do stuff with the Oscar
@@ -133,7 +133,7 @@ def significant():
 
 
 def unique(filename):
-    """Simple file I/O, and using a set to eliminate duplicates.
+    """ Simple file I/O, and using a set to eliminate duplicates.
     Test exception for missing file.
     Also, this is a static method since it doesn't actually refer to any class stuff.
     >>> filename = "test.txt"; create_test_file(filename); unique(filename)
@@ -150,7 +150,7 @@ def unique(filename):
 
 
 def encode_rownum(row_number_to_encode):
-    """encode_rownum() and decode_url() functions could be used in a URL shortener, essentially base62 encoding
+    """ encode_rownum() and decode_url() functions could be used in a URL shortener, essentially base62 encoding
     >>> encode_rownum(62)
     '10'
     >>> encode_rownum(1234567)
@@ -172,7 +172,7 @@ def encode_rownum(row_number_to_encode):
 
 
 def decode_url(str_to_decode):
-    """Inverse of encode_rownum()
+    """ Inverse of encode_rownum()
     >>> decode_url('5ban')
     1234567
     >>> decode_url('10')
@@ -195,7 +195,7 @@ def decode_url(str_to_decode):
 
 
 def fibonacci():
-    """Use the fibonacci_generator() to get one element at a time.
+    """ Use the fibonacci_generator() to get one element at a time.
     >>> fibonacci()
     0 1 1 2 3 5 8 13 21 34 55 89
     """
@@ -209,7 +209,7 @@ def fibonacci():
 
 
 def fibonacci_generator():
-    """Returns next number in fibonacci series."""
+    """ Returns next number in fibonacci series."""
     n = 0
     prev = 1  # a trick to bootstrap the series
     while True:
@@ -218,7 +218,7 @@ def fibonacci_generator():
 
 
 def permute(n, array):
-    """Permutations using Heap's Algorithm.
+    """ Permutations using Heap's Algorithm.
     >>> permute(4, list("ABCD")) # doctest: +ELLIPSIS
     ABCD
     BACD
@@ -241,7 +241,7 @@ def permute(n, array):
 
 
 def get_shuffled_deck():
-    """Deal out and track cards from a shuffled deck.
+    """ Deal out and track cards from a shuffled deck.
     Can't match a shuffled deck, but we can verify all of the cards are there with a BitVector
     >>> get_shuffled_deck() # doctest: +ELLIPSIS
     Unshuffled:
@@ -265,7 +265,7 @@ def get_shuffled_deck():
 
 
 def subprocess_ls():
-    """Run a simple subprocess. the doctest is pretty stupid because 'ls' output is unpredictable.
+    """ Run a simple subprocess. the doctest is pretty stupid because 'ls' output is unpredictable.
     >>> subprocess_ls()  # doctest: +ELLIPSIS
     ['...']
     """
@@ -287,7 +287,7 @@ def walkies():
 
 
 def process_file_with_generators():
-    """Look at generators expressions. I wish I had reviewed this more before the interview :(
+    """ Look at generators expressions. I wish I had reviewed this more before the interview :(
     >>> process_file_with_generators() # doctest: +ELLIPSIS
     0: 4853
     1: 4991
@@ -315,7 +315,7 @@ def process_file_with_generators():
 
 
 def elgoog(string_to_reverse):
-    """Multiple ways to reverse a string
+    """ Multiple ways to reverse a string
     >>> elgoog("GOOGLE")
     ELGOOG
     ELGOOG
@@ -337,7 +337,7 @@ def elgoog(string_to_reverse):
     print(''.join(slice_into_front_of_list))
 
 def count_unique(m):
-    """Counting unique items in an iterable
+    """ Counting unique items in an iterable
     Super useful for doctests: pprint orders dicts by the
     keys (coerce to plain dict first if necessary)
     >>> count_unique("GOOGLE")
@@ -350,6 +350,13 @@ def count_unique(m):
     for letter in m:
         d2[letter] += 1
     pprint.pprint(dict(d2))
+
+
+def constant_factory(value):
+    """ This function is used with a defaultdict to provide a constant for missing values.
+    It is tested in a separate unit test: test_constant_factory.py
+    """
+    return lambda: value
 
 
 if __name__ == "__main__":
