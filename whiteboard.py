@@ -7,7 +7,7 @@ import collections
 import re
 import doctest
 
-filename = "/Users/ed/lorem.txt"
+filename = "data/lorem.txt"
 
 
 def main():
