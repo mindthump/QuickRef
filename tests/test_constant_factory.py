@@ -2,8 +2,6 @@ from unittest import TestCase
 import collections
 from quickref import constant_factory
 
-__author__ = 'ed'
-
 
 class TestConstant_factory(TestCase):
     def test_constant_factory(self):

@@ -5,13 +5,9 @@
 import sys
 import os
 import doctest
-import random
-import copy
 import subprocess
 import pprint
-import BitVector
 import collections
-import itertools
 
 
 def main():
@@ -94,13 +90,13 @@ def phonetics(character):
     >>> phonetics('%')
     '$$ ERROR: character not found.'
     """
-    phonetics = []
+    phonetic_words = []
     # Rip the lines themselves apart...
     for line in phonetic_alphabet.splitlines():
         # ...then rip apart the words on each line
-        phonetics.extend(line.split())
+        phonetic_words.extend(line.split())
     # Pack it all into a dict
-    translation = {alphabet[x]: phonetics[x - 36] for x in range(36, 62)}
+    translation = {alphabet[x]: phonetic_words[x - 36] for x in range(36, 62)}
     # Using try/except to catch a KeyError; could also use dict.get() or a defaultdict to supply a default value
     try:
         c = translation[character]
@@ -118,7 +114,7 @@ def significant():
     Here is where we do stuff with the Whiskey
     'else' is executed when a 'for' loop finishes without a 'break'.
     """
-    for word in [x.split()[1] for x in phonetic_alphabet.splitlines() if
+    for word in [x.split(maxsplit=2)[1] for x in phonetic_alphabet.splitlines() if
                  x.split()[0] in ("Echo", "November", "Victor")]:
         print("Here is where we do stuff with the {}".format(word))
     else:
@@ -237,25 +233,32 @@ def permute(n, array):
 
 def subprocess_ls():
     """ Run a simple subprocess. The doctest is pretty stupid because 'ls' output is unpredictable.
+    Note: subprocess returns bytes (not str) unless "universal_newlines=True"
     DEMONSTRATES: subprocess (to run system commands).
     >>> subprocess_ls()  # doctest: +ELLIPSIS
     ['...']
     """
     foo = subprocess.check_output(['ls', '-l'], universal_newlines=True)
-    x = foo.split("\n")
+    x = foo.splitlines()
     pprint.pprint(x)
 
 
-def walkies():
+def walkies(root):
     """
-    DEMONSTRATES: os.walk function.
-    >>> d = walkies(); pprint.pprint(d) # doctest: +ELLIPSIS
-    [('/Users/ed/PycharmProjects/QuickRef',
+    DEMONSTRATES: os.walk function, including "pruning"
+    >>> d = walkies("."); pprint.pprint(d) # doctest: +ELLIPSIS
+    [('.',
     ...
 
     :return: [(path, [dirs], [files]), ...]
     """
-    contents = [x for x in os.walk(os.path.abspath(os.getcwd()))]
+    contents = []
+    tree = os.walk(root, topdown=True)
+    excluded_dirs = (".git", ".idea", "__pycache__",)
+    for root, dirs, files in tree:
+        # Pruning: "list[:]" replaces the values, doesn't create a new list
+        dirs[:] = [d for d in dirs if d not in excluded_dirs]
+        contents.append((root, dirs, files))
     return contents
 
 
@@ -336,55 +339,6 @@ def constant_factory(value):
     DEMONSTRATES: unittests, and a really dumb lambda function.
     """
     return lambda: value
-
-
-class Deck(object):
-    """ A deck of cards, each represented by a suit and a rank character.
-    The deck is originally in standard new-deck sort order.
-    """
-
-    def __init__(self):
-        """ Make an new, unshuffled deck.
-        DEMONSTRATES: nested list comprehension.
-        """
-        self.deck = [rank + suit for suit in "CHSD" for rank in "A23456789TJQK"]
-
-    def shuffle(self):
-        """ Shuffle the deck, and show the cards are all still there with a BitVector.
-        DEMONSTRATES: random.shuffle, copy.copy, BitVectors
-        >>> d = Deck(); print("Unshuffled:\\n{}".format(d.deck)) # doctest: +ELLIPSIS
-        Unshuffled:
-        ['AC', '2C', '3C', '4C', '5C', ..., 'JH', 'QH', 'KH', 'AS', ..., 'QS', 'KS', 'AD', '2D', ..., 'JD', 'QD', 'KD']
-        >>> d.shuffle()
-        Shuffled:
-        1111111111111111111111111111111111111111111111111111
-        """
-        # random.shuffle() works in-place on an existing list, returns None
-        # Make a (shallow) copy so we don't shuffle the current deck.
-        shuffled = copy.copy(self.deck)
-        random.shuffle(shuffled)
-        # Account for each card in the current deck
-        print("Shuffled:")
-        dbv = BitVector.BitVector(size=52)
-        for y in shuffled:
-            dbv[self.deck.index(y)] = 1
-        print(dbv)
-        # Replace the current deck with the shuffled deck.
-        self.deck = shuffled
-
-    @classmethod
-    def get_stacked_deck(cls):
-        """ BONUS! A card deck trick setup. Search for "eight kings chased" to see what it means.
-        DEMONSTRATES: itertools.cycle, list.append, class method (does not need an instance).
-        >>> pprint.pprint(Deck.get_stacked_deck(), compact=True, width=99999)  # doctest: +ELLIPSIS
-        ['8C', 'KH', '3S', 'TD', '2C', '7H', '9S', ..., '5S', 'QD', '4C', 'AH', '6S', 'JD']
-        """
-        deck = []
-        suits = itertools.cycle("CHSD")
-        ranks = itertools.cycle(['8', 'K', '3', 'T', '2', '7', '9', '5', 'Q', '4', 'A', '6', 'J'])
-        for card in range(52):
-            deck.append(str(next(ranks)) + str(next(suits)))
-        return deck
 
 
 if __name__ == "__main__":
