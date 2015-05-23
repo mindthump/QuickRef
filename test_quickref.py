@@ -4,11 +4,10 @@ from quickref import *
 
 # Create some useful variables for tests.
 food_list = [['apples', 'bananas', 'oranges'], ['hamburgers', 'pizza', 'tacos'],
-        ['grasshoppers', 'horse', 'eels'], 27.0345, function_reference]
+             ['grasshoppers', 'horse', 'eels'], 27.0345, function_reference]
 
 
 class TestQuickref(TestCase):
-
     def test_string_demo(self):
         """
         """
@@ -40,25 +39,47 @@ class TestQuickref(TestCase):
         self.assertEqual(phonetics('%'), '$$ ERROR: character not found.')
 
     def test_significant(self):
-        """     >>> significant()
-        Here is where we do stuff with the Foxtrot
-        Here is where we do stuff with the Oscar
-        Here is where we do stuff with the Whiskey
-        'else' is executed when a 'for' loop finishes without a 'break'.
+        """ A tuple literal
         """
-        pass
+        t = ("Echo", "November", "Victor")
+        self.assertEqual(significant(t), "Foxtrot Oscar Whiskey : and 'else' was executed.")
 
     def test_unique(self):
-        pass
+        # Nested function
+        def create_test_file(filename):
+            """This creates a small file with repeated lines
+            for methods finding unique lines
+            DEMONSTRATES: writing to files in a context manager, multi-line strings
+            """
+            with open(filename, mode='w') as fw:
+                fw.write("""klasdflhf
+sdfdsf
+asdfasdf
+asfd
+asdfasdf
+klasdflhf
+asfd
+sdfdsf""")
+
+        filename = "test.txt"
+        create_test_file(filename)
+        self.assertEqual(unique(filename), "asdfasdf asfd klasdflhf sdfdsf")
+        os.remove(filename)
+        unique(filename)
+        self.assertEqual(unique(filename), "File {} not found.".format(filename))
 
     def test_encode_rownum(self):
-        pass
+        self.assertEqual(encode_rownum(62), '10')
+        self.assertEqual(encode_rownum(1234567), '5ban')
+        self.assertEqual(encode_rownum(0), '0')
 
     def test_decode_url(self):
-        pass
+        self.assertEqual(decode_url('10'), 62)
+        self.assertEqual(decode_url('5ban'), 1234567)
+        self.assertEqual(decode_url('0'), 0)
 
     def test_fibonacci(self):
-        pass
+        self.assertEqual(fibonacci(), "0 1 1 2 3 5 8 13 21 34 55 89")
 
     def test_permute(self):
         pass

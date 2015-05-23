@@ -18,22 +18,6 @@ Romeo Sierra Tango Uniform
 Victor Whiskey X-ray Yankee Zulu"""
 
 
-def create_test_file(filename):
-    """This creates a small file with repeated lines
-    for methods finding unique lines
-    DEMONSTRATES: writing to files in a context manager, multi-line strings
-    """
-    with open(filename, mode='w') as fw:
-        fw.write(""" klasdflhf
-sdfdsf
-asdfasdf
-asfd
-asdfasdf
-klasdflhf
-asfd
-sdfdsf""")
-
-
 def string_demo(parameter):
     """
     DEMONSTRATES: Mixed single/double quote, formatting, concatenation, repetition.
@@ -42,8 +26,7 @@ def string_demo(parameter):
 
 
 def filtered_list(list_to_filter):
-    """
-    Lists and dicts can hold non-homogeneous types, including function references
+    """ Lists and dicts can hold non-homogeneous types, including function references
     DEMONSTRATES: List comprehension w/filter clause, using the element's type
     """
     return sorted([element[0] for element in list_to_filter if type(element) is list])
@@ -69,7 +52,8 @@ def function_reference(param1, param2):
 
 
 def phonetics(character):
-    """ DEMONSTRATES: mangling strings; dict comprehension, try/catch.
+    """
+    DEMONSTRATES: mangling strings; dict comprehension, try/catch.
     """
     phonetic_words = []
     # Rip the lines themselves apart...
@@ -86,42 +70,34 @@ def phonetics(character):
         return '$$ ERROR: character not found.'
 
 
-def significant():
+def significant(s_list):
     """ Do stuff with the second word in 'significant' lines.
     DEMONSTRATES: comprehensions with conditionals, for/else.
     """
+    result = ""
     for word in [x.split(maxsplit=2)[1] for x in phonetic_alphabet.splitlines() if
-                 x.split()[0] in ("Echo", "November", "Victor")]:
-        print("Here is where we do stuff with the {}".format(word))
+                 x.split()[0] in s_list]:
+        result += word + " "
     else:
-        print("'else' is executed when a 'for' loop finishes without a 'break'.")
+        result += ": and 'else' was executed."
+    return result
 
 
 def unique(filename):
     """ Unique rows in a file
     DEMONSTRATES: set comprehension to eliminate duplicates, simple file read, try/catch (missing file exception).
-    >>> filename = "test.txt"; create_test_file(filename); unique(filename)
-    ['asdfasdf', 'asfd', 'klasdflhf', 'sdfdsf']
-    >>> os.remove(filename); unique(filename) # doctest: +ELLIPSIS
-    File ... not found.
     """
     try:
         with open(os.path.join(os.getcwd(), filename), 'r') as fr:
             ulines = {line.strip() for line in fr}
-        pprint.pprint(sorted(ulines))
+        return " ".join(sorted(ulines))
     except IOError:
-        print("File {fn} not found.".format(fn=filename))
+        return "File {fn} not found.".format(fn=filename)
 
 
 def encode_rownum(row_number_to_encode):
     """ encode_rownum() and decode_url() functions could be used in a URL shortener, essentially base62 encoding
     DEMONSTRATES: recursion, divmod to get both integer quotient and remainder
-    >>> encode_rownum(62)
-    '10'
-    >>> encode_rownum(1234567)
-    '5ban'
-    >>> encode_rownum(0)
-    '0'
     """
     if row_number_to_encode == 0:
         return '0'
@@ -139,12 +115,6 @@ def encode_rownum(row_number_to_encode):
 def decode_url(str_to_decode):
     """ Inverse of encode_rownum()
     DEMONSTRATES: string indexing, power function
-    >>> decode_url('5ban')
-    1234567
-    >>> decode_url('10')
-    62
-    >>> decode_url('0')
-    0
     """
     i = 0
     rownum = 0
@@ -160,8 +130,6 @@ def decode_url(str_to_decode):
 def fibonacci():
     """ Use the fibonacci_generator() to get one element at a time.
     DEMONSTRATES: using generator functions
-    >>> fibonacci()
-    0 1 1 2 3 5 8 13 21 34 55 89
     """
     outstr = ''
     for f in fibonacci_generator():
@@ -169,7 +137,8 @@ def fibonacci():
             outstr += str(f) + ' '
         else:
             break
-    print(outstr.strip())  # remove trailing space
+    # remove trailing space
+    return outstr.strip()
 
 
 def fibonacci_generator():
