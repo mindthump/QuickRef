@@ -9,11 +9,6 @@ import subprocess
 import pprint
 import collections
 
-
-def main():
-    doctest.testmod(verbose=True)
-
-# Create some useful variables for tests.
 alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 phonetic_alphabet = """Alpha Bravo Charlie Delta
 Echo Foxtrot Golf Hotel India
@@ -39,56 +34,42 @@ asfd
 sdfdsf""")
 
 
-def demo(parameter):
-    """ Some basic demos.
-    DEMONSTRATES: String functions, lists, dicts, comprehensions, function references, zipping
-    >>> demo('Ed')
-    Welcome to Ed's World!!!
-    ['apples', 'grasshoppers', 'hamburgers']
-    {'fruit': ['apples', 'bananas', 'oranges'],
-     'meals': ['hamburgers', 'pizza', 'tacos'],
-     'weird': ['grasshoppers', 'horse', 'eels']}
-    32 plus 76 equals 108
-    Result 108 is over one hundred
+def string_demo(parameter):
     """
+    DEMONSTRATES: Mixed single/double quote, formatting, concatenation, repetition.
+    """
+    return "Welcome to {name}'s".format(name=parameter) + " World" + '!' * 3
 
-    # Mixed single/double quote, formatting, concatenation, repetition.
-    print("Welcome to {name}'s".format(name=parameter) + " World" + '!' * 3)
 
-    # Lists and dicts can hold non-homogeneous types, including function references
-    food = [['apples', 'bananas', 'oranges'], ['hamburgers', 'pizza', 'tacos'],
-            ['grasshoppers', 'horse', 'eels'], 27.0345, function_reference]
+def filtered_list(list_to_filter):
+    """
+    Lists and dicts can hold non-homogeneous types, including function references
+    DEMONSTRATES: List comprehension w/filter clause, using the element's type
+    """
+    return sorted([element[0] for element in list_to_filter if type(element) is list])
 
-    # list comprehension w/filter clause, using the element's type
-    print(sorted([element[0] for element in food if type(element) is list]))
 
-    # Interweaving elements with zip(), coerced to a dictionary
-    food_types = ['fruit', 'meals', 'weird']
-    food_dict = dict(zip(food_types, food))
-    pprint.pprint(food_dict)
-
-    # a variable can hold a function reference, and it is called when it looks like a function
-    # (i.e., with parenthesis and signature-appropriate arguments)
-    food[4](32, 76)
+def zipping(type_list, items_list):
+    """
+    DEMONSTRATES: Interweaving elements with zip(), coerced to a dictionary
+    """
+    food_dict = zip(type_list, items_list)
+    return dict(food_dict)
 
 
 def function_reference(param1, param2):
-    """ This function appears as a reference buried in a list in demo()
-    DEMONSTRATES: trinary, old-style formatting
     """
-    results = param1 + param2
-    print("{0} plus {2} equals {1}".format(param1, results, param2))  # nameless but ordered
-    x = "is" if results > 100 else "is not"  # trinary(ish)
+    DEMONSTRATES: a function reference buried in a list, old-style formatting
+    """
+    total = param1 + param2
+    # trinary(ish)
+    # x = "is" if total > 100 else "is not"
     # old-style formatting needs a tuple, but see process_file_with_generators() below
-    print("Result %s %s over one hundred" % (results, x))
+    return "%s plus %s equals %s" % (param1, param2, total)
 
 
 def phonetics(character):
     """ DEMONSTRATES: mangling strings; dict comprehension, try/catch.
-    >>> phonetics('L')
-    'Lima'
-    >>> phonetics('%')
-    '$$ ERROR: character not found.'
     """
     phonetic_words = []
     # Rip the lines themselves apart...
@@ -108,11 +89,6 @@ def phonetics(character):
 def significant():
     """ Do stuff with the second word in 'significant' lines.
     DEMONSTRATES: comprehensions with conditionals, for/else.
-    >>> significant()
-    Here is where we do stuff with the Foxtrot
-    Here is where we do stuff with the Oscar
-    Here is where we do stuff with the Whiskey
-    'else' is executed when a 'for' loop finishes without a 'break'.
     """
     for word in [x.split(maxsplit=2)[1] for x in phonetic_alphabet.splitlines() if
                  x.split()[0] in ("Echo", "November", "Victor")]:
@@ -339,7 +315,3 @@ def constant_factory(value):
     DEMONSTRATES: unittests, and a really dumb lambda function.
     """
     return lambda: value
-
-
-if __name__ == "__main__":
-    sys.exit(main())
