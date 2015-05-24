@@ -82,7 +82,7 @@ sdfdsf""")
         self.assertEqual(fibonacci(), "0 1 1 2 3 5 8 13 21 34 55 89")
 
     def test_permute(self):
-        pass
+        permute(4, list("ABCD"))
 
     def test_subprocess_ls(self):
         pass
@@ -98,3 +98,10 @@ sdfdsf""")
 
     def test_count_unique(self):
         pass
+
+    def test_constant_factory(self):
+        d = collections.defaultdict(lambda: '<missing>')
+        d.update(name='John', action='ran')
+        # This also shows unpacking a dict for str.format()
+        result = "{name} {action} to {object}".format(**d)
+        self.failIf(result != 'John ran to <missing>')

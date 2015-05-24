@@ -155,7 +155,6 @@ def fibonacci_generator():
 def permute(n, array):
     """ Permutations using Heap's Algorithm.
     DEMONSTRATES: recursion, python no-temp swap trick
-    >>> permute(4, list("ABCD")) # doctest: +ELLIPSIS
     ABCD
     BACD
     ...
@@ -165,7 +164,7 @@ def permute(n, array):
     BADC
     """
     if n == 1:
-        print(''.join(array))
+        print(array)
     else:
         for i in range(0, n):
             # Recurse, permuting the first through (n-1)th elements
@@ -262,7 +261,6 @@ def elgoog(string_to_reverse):
 
 def count_unique(m):
     """ Counting unique items in an iterable
-    Super useful for doctests: pprint orders dicts by the keys (coerce to plain dict first if necessary)
     DEMONSTRATES: collections.Counter (dict subclass)
     >>> count_unique("GOOGLE")
     {'E': 1, 'G': 2, 'L': 1, 'O': 2}
@@ -284,3 +282,7 @@ def constant_factory(value):
     DEMONSTRATES: unittests, and a really dumb lambda function.
     """
     return lambda: value
+
+
+if __name__ == '__main__':
+    permute(4, list("ABCD"))
