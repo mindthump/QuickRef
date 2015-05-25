@@ -5,6 +5,14 @@ from quickref import *
 # Create some useful variables for tests.
 food_list = [['apples', 'bananas', 'oranges'], ['hamburgers', 'pizza', 'tacos'],
              ['grasshoppers', 'horse', 'eels'], 27.0345, function_reference]
+test_file_data = """klasdflhf
+sdfdsf
+asdfasdf
+asfd
+asdfasdf
+klasdflhf
+asfd
+sdfdsf"""
 
 
 class TestQuickref(TestCase):
@@ -46,21 +54,13 @@ class TestQuickref(TestCase):
 
     def test_unique(self):
         # Nested function
-        def create_test_file(filename):
+        def create_test_file(create_file_name):
             """This creates a small file with repeated lines
             for methods finding unique lines
             DEMONSTRATES: writing to files in a context manager, multi-line strings
             """
-            with open(filename, mode='w') as fw:
-                fw.write("""klasdflhf
-sdfdsf
-asdfasdf
-asfd
-asdfasdf
-klasdflhf
-asfd
-sdfdsf""")
-
+            with open(create_file_name, mode='w') as fw:
+                fw.write(test_file_data)
         filename = "test.txt"
         create_test_file(filename)
         self.assertEqual(unique(filename), "asdfasdf asfd klasdflhf sdfdsf")
@@ -88,18 +88,30 @@ sdfdsf""")
         pass
 
     def test_walkies(self):
-        pass
+        d = walkies(".")
 
     def process_file_with_generators(self):
         pass
 
     def test_elgoog(self):
-        pass
+        self.assertEqual(elgoog("GOOGLE"), "ELGOOG|ELGOOG|ELGOOG|ELGOOG")
 
     def test_count_unique(self):
-        pass
+        """
+        """
+        self.assertDictEqual(count_unique("GOOGLE"), {'E': 1, 'G': 2, 'L': 1, 'O': 2})
+
+    def test_unique_via_comp(self):
+        """ Dictionaries are output by pprint in key order. The options are to keep the output on one line.
+        """
+        self.assertEqual(pprint.pformat(dict(unique_via_comp("../data/lorem.txt")), compact=True, width=999999),
+                         "{'ac': 7, 'arcu': 7, 'eget': 10, 'et': 10, 'in': 11, 'mauris': 7, 'nec': 8, 'non': 7, 'vel': 8}")
 
     def test_constant_factory(self):
+        """ Note: This test is stand-alone, it has no part in quickref.py
+        DEMONSTRATES: collections.defaultdict()
+        """
+        # defaultdict takes a callable, which is called with no parameters
         d = collections.defaultdict(lambda: '<missing>')
         d.update(name='John', action='ran')
         # This also shows unpacking a dict for str.format()

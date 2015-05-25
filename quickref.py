@@ -8,6 +8,7 @@ import doctest
 import subprocess
 import pprint
 import collections
+import re
 
 alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 phonetic_alphabet = """Alpha Bravo Charlie Delta
@@ -145,11 +146,11 @@ def fibonacci_generator():
     """ Returns next number in fibonacci series.
     DEMONSTRATES: generators (yield statement)
     """
-    n = 0
-    prev = 1  # a trick to bootstrap the series
+    # a trick to bootstrap the series
+    a, b = 0, 1
     while True:
-        yield n
-        prev, n = n, prev + n  # sweet swap trick
+        yield a
+        a, b = b, a + b  # sweet swap trick
 
 
 def permute(n, array):
@@ -190,17 +191,16 @@ def subprocess_ls():
 def walkies(root):
     """
     DEMONSTRATES: os.walk function, including "pruning"
-    >>> d = walkies("."); pprint.pprint(d) # doctest: +ELLIPSIS
-    [('.',
-    ...
 
     :return: [(path, [dirs], [files]), ...]
     """
     contents = []
-    tree = os.walk(root, topdown=True)
     excluded_dirs = (".git", ".idea", "__pycache__",)
+    # "tree" is a generator
+    tree = os.walk(root, topdown=True)
     for root, dirs, files in tree:
         # Pruning: "list[:]" replaces the values, doesn't create a new list
+        # With 'topdown=True', altering the "dirs" element changes what the next iteration searches
         dirs[:] = [d for d in dirs if d not in excluded_dirs]
         contents.append((root, dirs, files))
     return contents
@@ -227,7 +227,7 @@ def process_file_with_generators():
         # the outer generator breaks that by dashes and returns the third element
         # The 'next' outers and inners are produced only when they are actually used
         inner = (line.split(',')[0] for line in data_file)
-        outer = (line.split('-')[2] for line in inner)
+        outer = (line.split('-')[2] for line in inner) # Nested generator
         # Enumerate returns two values (index, value) but since we only supply
         # one variable name it is stored as a tuple. The new-style string format
         # requires the tuple to be unpacked with "*".
@@ -238,50 +238,60 @@ def process_file_with_generators():
 def elgoog(string_to_reverse):
     """ Multiple ways to reverse a string
     DEMONSTRATES: Negative count string slice, concatenation, slice into front
-    >>> elgoog("GOOGLE")
-    ELGOOG
-    ELGOOG
-    ELGOOG
-    ELGOOG
     """
-    print(string_to_reverse[::-1])
+    negative_slice = string_to_reverse[::-1]
+
     concat_before_start = ""
-    insert_at_front_of_list = []
-    slice_into_front_of_list = []
     for i in string_to_reverse:
         # Not great - produces a new immutable string each time
         concat_before_start = i + concat_before_start
-        # These produce lists that need to be joined
+
+    insert_at_front_of_list = []
+    for i in string_to_reverse:
+        # Produces list that need to be joined
         insert_at_front_of_list.insert(0, i)
+
+    slice_into_front_of_list = []
+    for i in string_to_reverse:
+        # Produces list that need to be joined
         slice_into_front_of_list[:0] = i
-    print(concat_before_start)
-    print(''.join(insert_at_front_of_list))
-    print(''.join(slice_into_front_of_list))
+
+    r1 = negative_slice
+    r2 = concat_before_start
+    r3 = ''.join(insert_at_front_of_list)
+    r4 = ''.join(slice_into_front_of_list)
+    return "{}|{}|{}|{}".format(r1, r2, r3, r4)
 
 
 def count_unique(m):
     """ Counting unique items in an iterable
     DEMONSTRATES: collections.Counter (dict subclass)
-    >>> count_unique("GOOGLE")
-    {'E': 1, 'G': 2, 'L': 1, 'O': 2}
-    {'E': 1, 'G': 2, 'L': 1, 'O': 2}
     """
-    # All items at once
+    # All items at once, what it was really created for
     d1 = collections.Counter(m)
-    pprint.pprint(dict(d1))
-    # One item at a time
-    d2 = collections.Counter()
-    for letter in m:
-        d2[letter] += 1
-    pprint.pprint(dict(d2))
+    return dict(d1)
+    ## One item at a time
+    # d2 = collections.Counter()
+    # for letter in m:
+    #     d2[letter] += 1
+    # pprint.pprint(dict(d2))
 
 
-def constant_factory(value):
-    """ This function is used with a defaultdict to provide a constant for missing values.
-    It is tested in a separate unit test: test_constant_factory.py
-    DEMONSTRATES: unittests, and a really dumb lambda function.
+def unique_via_comp(file_name):
     """
-    return lambda: value
+    """
+    c = collections.Counter()
+    with open(file_name) as f:
+        for l in f:
+            w = re.findall(r"[\w']+", l)
+            c.update(w)
+    # These must be a way to avoid these from being collected
+    del c['']
+    # print(pprint.pformat(dict(c.most_common(9)), compact=True, width=999999))
+    return c.most_common(9)
+
+
+
 
 
 if __name__ == '__main__':
