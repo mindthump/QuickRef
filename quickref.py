@@ -4,13 +4,13 @@
 
 import sys
 import os
-import doctest
 import subprocess
 import pprint
 import collections
 import re
 
 alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 phonetic_alphabet = """Alpha Bravo Charlie Delta
 Echo Foxtrot Golf Hotel India
 Juliet Kilo Lima Mike
@@ -165,7 +165,9 @@ def permute(n, array):
     BADC
     """
     if n == 1:
-        print(array)
+        pass
+        # TODO: yield? It seems to be very complex with recursion.
+        # print(array)
     else:
         for i in range(0, n):
             # Recurse, permuting the first through (n-1)th elements
@@ -227,7 +229,7 @@ def process_file_with_generators():
         # the outer generator breaks that by dashes and returns the third element
         # The 'next' outers and inners are produced only when they are actually used
         inner = (line.split(',')[0] for line in data_file)
-        outer = (line.split('-')[2] for line in inner) # Nested generator
+        outer = (line.split('-')[2] for line in inner)  # Nested generator
         # Enumerate returns two values (index, value) but since we only supply
         # one variable name it is stored as a tuple. The new-style string format
         # requires the tuple to be unpacked with "*".
@@ -256,11 +258,15 @@ def elgoog(string_to_reverse):
         # Produces list that need to be joined
         slice_into_front_of_list[:0] = i
 
+    reverse_as_list = list(string_to_reverse)
+    reverse_as_list.reverse()
+
     r1 = negative_slice
     r2 = concat_before_start
     r3 = ''.join(insert_at_front_of_list)
     r4 = ''.join(slice_into_front_of_list)
-    return "{}|{}|{}|{}".format(r1, r2, r3, r4)
+    r5 = ''.join(reverse_as_list)
+    return "{}|{}|{}|{}|{}".format(r1, r2, r3, r4, r5)
 
 
 def count_unique(m):
@@ -270,7 +276,7 @@ def count_unique(m):
     # All items at once, what it was really created for
     d1 = collections.Counter(m)
     return dict(d1)
-    ## One item at a time
+    # One item at a time
     # d2 = collections.Counter()
     # for letter in m:
     #     d2[letter] += 1
@@ -287,12 +293,8 @@ def unique_via_comp(file_name):
             c.update(w)
     # These must be a way to avoid these from being collected
     del c['']
-    # print(pprint.pformat(dict(c.most_common(9)), compact=True, width=999999))
     return c.most_common(9)
 
 
-
-
-
 if __name__ == '__main__':
-    permute(4, list("ABCD"))
+    sys.exit()

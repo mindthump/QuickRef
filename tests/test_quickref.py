@@ -94,7 +94,7 @@ class TestQuickref(TestCase):
         pass
 
     def test_elgoog(self):
-        self.assertEqual(elgoog("GOOGLE"), "ELGOOG|ELGOOG|ELGOOG|ELGOOG")
+        self.assertEqual(elgoog("GOOGLE"), "ELGOOG|ELGOOG|ELGOOG|ELGOOG|ELGOOG")
 
     def test_count_unique(self):
         """
@@ -104,10 +104,10 @@ class TestQuickref(TestCase):
     def test_unique_via_comp(self):
         """ Dictionaries are output by pprint in key order. The options are to keep the output on one line.
         """
-        self.assertEqual(pprint.pformat(dict(unique_via_comp("../data/lorem.txt")), compact=True, width=999999),
-                         "{'ac': 7, 'arcu': 7, 'eget': 10, 'et': 10, 'in': 11, 'mauris': 7, 'nec': 8, 'non': 7, 'vel': 8}")
+        self.assertEqual("{'ac': 7, 'arcu': 7, 'eget': 10, 'et': 10, 'in': 11, 'mauris': 7, 'nec': 8, 'non': 7, 'vel': 8}",
+                         pprint.pformat(dict(unique_via_comp("../data/lorem.txt")), compact=True, width=999999))
 
-    def test_constant_factory(self):
+    def test_default_dict(self):
         """ Note: This test is stand-alone, it has no part in quickref.py
         DEMONSTRATES: collections.defaultdict()
         """
