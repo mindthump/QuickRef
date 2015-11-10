@@ -291,7 +291,7 @@ def unique_via_comp(file_name):
         for l in f:
             w = re.findall(r"[\w']+", l)
             c.update(w)
-    # These must be a way to avoid these from being collected
+    # There must be a way to avoid these from being collected
     del c['']
     return c.most_common(9)
 
