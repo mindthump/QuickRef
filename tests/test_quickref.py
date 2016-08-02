@@ -25,6 +25,8 @@ class TestQuickref(TestCase):
         self.assertListEqual(filtered_list(food_list), ['apples', 'grasshoppers', 'hamburgers'])
 
     def test_zipping(self):
+        """
+        """
         food_types = ['fruit', 'meals', 'weird']
         expected_result = {
             'fruit': ['apples', 'bananas', 'oranges'],
@@ -36,8 +38,10 @@ class TestQuickref(TestCase):
             self.assertListEqual(v, expected_result[k])
 
     def test_use_function_reference(self):
-        # a variable can hold a function reference, and it is called when it looks like a function
-        # (i.e., with parenthesis and signature-appropriate arguments)
+        """
+        A variable can hold a function reference, and it is called when it looks like a function
+        (i.e., with parenthesis and signature-appropriate arguments)
+        """
         self.assertEqual(food_list[4](32, 76), "32 plus 76 equals 108")
 
     def test_phonetics(self):
@@ -94,7 +98,7 @@ class TestQuickref(TestCase):
         pass
 
     def test_elgoog(self):
-        self.assertEqual(elgoog("GOOGLE"), "ELGOOG|ELGOOG|ELGOOG|ELGOOG|ELGOOG")
+        self.assertEqual(elgoog("GOOGLE"), "ELGOOG|ELGOOG|ELGOOG|ELGOOG|ELGOOG|ELGOOG")
 
     def test_count_unique(self):
         """
@@ -105,7 +109,7 @@ class TestQuickref(TestCase):
         """ Dictionaries are output by pprint in key order. The options are to keep the output on one line.
         """
         self.assertEqual("{'ac': 7, 'arcu': 7, 'eget': 10, 'et': 10, 'in': 11, 'mauris': 7, 'nec': 8, 'non': 7, 'vel': 8}",
-                         pprint.pformat(dict(unique_via_comp("../data/lorem.txt")), compact=True, width=999999))
+                         pprint.pformat(dict(unique_via_comp("../data/lorem.txt")), width=999999))
 
     def test_default_dict(self):
         """ Note: This test is stand-alone, it has no part in quickref.py
@@ -114,6 +118,15 @@ class TestQuickref(TestCase):
         # defaultdict takes a callable, which is called with no parameters
         d = collections.defaultdict(lambda: '<missing>')
         d.update(name='John', action='ran')
-        # This also shows unpacking a dict for str.format()
-        result = "{name} {action} to {object}".format(**d)
+        result = "{0[name]} {0[action]} to {0[object]}".format(d)
         self.failIf(result != 'John ran to <missing>')
+
+    def test_templates(self):
+        """
+        Use string Templates
+        :return:
+        """
+        sentence = "My oak is a mighty oak."
+        (full_sub, partial_sub) = template_substitute("oak", "mighty")
+        self.assertEquals(full_sub, sentence)
+        self.assertEquals(partial_sub, sentence)

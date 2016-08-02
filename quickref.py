@@ -1,4 +1,3 @@
-# ! /usr/bin/env python
 """ An example Python script
 """
 
@@ -8,6 +7,7 @@ import subprocess
 import pprint
 import collections
 import re
+from string import Template
 
 alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -76,7 +76,7 @@ def significant(s_list):
     DEMONSTRATES: comprehensions with conditionals, for/else.
     """
     result = ""
-    for word in [x.split(maxsplit=2)[1] for x in phonetic_alphabet.splitlines() if
+    for word in [x.split()[1] for x in phonetic_alphabet.splitlines() if
                  x.split()[0] in s_list]:
         result += word + " "
     else:
@@ -241,13 +241,21 @@ def elgoog(string_to_reverse):
     """ Multiple ways to reverse a string
     DEMONSTRATES: Negative count string slice, concatenation, slice into front
     """
-    negative_slice = string_to_reverse[::-1]
-
+    # These two approaches actually build strings, not a list of characters.
+    # This is not optimal - it produces a new immutable string each time
     concat_before_start = ""
     for i in string_to_reverse:
-        # Not great - produces a new immutable string each time
         concat_before_start = i + concat_before_start
+    # Much better, the string build happens internally.
+    negative_slice = string_to_reverse[::-1]
 
+    # Interesting: reversed() does not return a reversed string, but
+    # rather a 'reversed iterator' instance!
+    cheating = reversed(string_to_reverse)
+
+    # We don't want to use a comprehension for this next approach.
+    # Since each list.insert() actually returns None, you'd only
+    # be using it for a side effect (a bad practice!).
     insert_at_front_of_list = []
     for i in string_to_reverse:
         # Produces list that need to be joined
@@ -261,12 +269,13 @@ def elgoog(string_to_reverse):
     reverse_as_list = list(string_to_reverse)
     reverse_as_list.reverse()
 
-    r1 = negative_slice
-    r2 = concat_before_start
-    r3 = ''.join(insert_at_front_of_list)
-    r4 = ''.join(slice_into_front_of_list)
-    r5 = ''.join(reverse_as_list)
-    return "{}|{}|{}|{}|{}".format(r1, r2, r3, r4, r5)
+    r1 = concat_before_start
+    r2 = negative_slice
+    r3 = ''.join(cheating)
+    r4 = ''.join(insert_at_front_of_list)
+    r5 = ''.join(slice_into_front_of_list)
+    r6 = ''.join(reverse_as_list)
+    return "{}|{}|{}|{}|{}|{}".format(r1, r2, r3, r4, r5, r6)
 
 
 def count_unique(m):
@@ -294,6 +303,14 @@ def unique_via_comp(file_name):
     # There must be a way to avoid these from being collected
     del c['']
     return c.most_common(9)
+
+
+def template_substitute(noun, adjective):
+    input = Template('My ${zzz} is a ${qqq} ${zzz}.')
+    full = input.substitute({'zzz': noun, 'qqq': adjective})
+    partial = Template(input.safe_substitute(zzz=noun))
+    partial_completed = partial.substitute(qqq=adjective)
+    return full, partial_completed
 
 
 if __name__ == '__main__':
