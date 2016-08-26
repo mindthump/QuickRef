@@ -89,6 +89,7 @@ class TestQuickref(TestCase):
         permute(4, list("ABCD"))
 
     def test_subprocess_ls(self):
+        # TODO: Mocking example?
         pass
 
     def test_walkies(self):

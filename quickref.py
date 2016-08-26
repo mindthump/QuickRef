@@ -7,9 +7,10 @@ import subprocess
 import pprint
 import collections
 import re
-from string import Template
+import string
 
-alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+# "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+alphabet = string.digits + string.ascii_letters
 
 phonetic_alphabet = """Alpha Bravo Charlie Delta
 Echo Foxtrot Golf Hotel India
@@ -121,7 +122,7 @@ def decode_url(str_to_decode):
     rownum = 0
     while len(str_to_decode):
         char_to_decode = str_to_decode[-1]
-        str_to_decode = str_to_decode[0:-1]
+        str_to_decode = str_to_decode[:-1]
         idx = alphabet.index(char_to_decode)
         rownum += (pow(62, i) * idx)
         i += 1
@@ -179,11 +180,11 @@ def permute(n, array):
 
 
 def subprocess_ls():
-    """ Run a simple subprocess. The doctest is pretty stupid because 'ls' output is unpredictable.
+    """
+    Run a simple subprocess. The test is meaningless
+    because 'ls' output is unpredictable.
     Note: subprocess returns bytes (not str) unless "universal_newlines=True"
     DEMONSTRATES: subprocess (to run system commands).
-    >>> subprocess_ls()  # doctest: +ELLIPSIS
-    ['...']
     """
     foo = subprocess.check_output(['ls', '-l'], universal_newlines=True)
     x = foo.splitlines()
@@ -306,9 +307,9 @@ def unique_via_comp(file_name):
 
 
 def template_substitute(noun, adjective):
-    input = Template('My ${zzz} is a ${qqq} ${zzz}.')
+    input = string.Template('My ${zzz} is a ${qqq} ${zzz}.')
     full = input.substitute({'zzz': noun, 'qqq': adjective})
-    partial = Template(input.safe_substitute(zzz=noun))
+    partial = string.Template(input.safe_substitute(zzz=noun))
     partial_completed = partial.substitute(qqq=adjective)
     return full, partial_completed
 
