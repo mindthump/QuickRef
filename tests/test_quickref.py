@@ -1,6 +1,12 @@
-from unittest import TestCase
-from quickref import *
+import unittest
+import inspect
+import sys, os
 
+# Some folderol to get this project's root on the path.
+cmd_parent_folder = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile(inspect.currentframe()))[0], "..")))
+if cmd_parent_folder not in sys.path:
+    sys.path.insert(0, cmd_parent_folder)
+from quickref import *
 
 # Create some useful variables for tests.
 food_list = [['apples', 'bananas', 'oranges'], ['hamburgers', 'pizza', 'tacos'],
@@ -15,7 +21,7 @@ asfd
 sdfdsf"""
 
 
-class TestQuickref(TestCase):
+class TestQuickref(unittest.TestCase):
     def test_string_demo(self):
         """
         """
@@ -131,3 +137,8 @@ class TestQuickref(TestCase):
         (full_sub, partial_sub) = template_substitute("oak", "mighty")
         self.assertEquals(full_sub, sentence)
         self.assertEquals(partial_sub, sentence)
+
+
+# This lets you run the tests on the command line
+if __name__ == '__main__':
+    unittest.main()

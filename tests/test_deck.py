@@ -1,10 +1,17 @@
-from unittest import TestCase
-from Deck import Deck
+import unittest
 import copy
 import BitVector
+import sys, os
+import inspect
+
+# Some folderol to get this project's root on the path.
+cmd_parent_folder = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile(inspect.currentframe()))[0], "..")))
+if cmd_parent_folder not in sys.path:
+    sys.path.insert(0, cmd_parent_folder)
+from Deck import Deck
 
 
-class TestDeck(TestCase):
+class TestDeck(unittest.TestCase):
     def setUp(self):
         self.test_deck = Deck()
         # Make a copy so we have something to compare.
@@ -55,3 +62,7 @@ class TestDeck(TestCase):
         self.test_deck.replace_cards_in_deck(hand)
         self.assertEqual(self.account_for_cards(), self.FULL_DECK)
 
+
+# This lets you run the tests on the command line
+if __name__ == '__main__':
+    unittest.main()

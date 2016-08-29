@@ -1,5 +1,6 @@
 from __future__ import print_function
 import sys, traceback
+import this
 from collections import defaultdict, namedtuple
 # Don't do this: from utilities import *
 from utilities import commit_changesets, generate_fake_table_row
