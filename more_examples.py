@@ -1,5 +1,4 @@
 from __future__ import print_function
-import sys, traceback
 import this
 from collections import defaultdict, namedtuple
 # Don't do this: from utilities import *
@@ -60,7 +59,7 @@ print("x is now {}".format(better))
 
 print('--------------------')
 
-# Default is an emmpty list
+# Default is an empty list
 foo = defaultdict(list)
 for k, v in bingo:
     foo[k].append(v)
@@ -70,24 +69,32 @@ print(foo['x'])
 print('--------------------')
 
 # Falsey-ness
-x = None
+x = "All of these are false."
 if [] or {} or set() or () or "" or 0 or None or False:
-    x = True
+    x = "At least one of these is true."
 print(x)
+
+a_boolean = 1 == 0
+if a_boolean:
+    print("a_boolean is True")
+else:
+    print("a_boolean is False")
 
 print('--------------------')
 
 commit_ids = ['74e041d3', '3bea427e', 'd1dbc75']
-gerrits = []
 Gerrit = namedtuple('Gerrit', 'changeid commitid')
+gerrits = []
 
 for commit in commit_ids or []:
     # if commit_ids is "falsey", it's not iterable!
     gerrit_change_number = commit_changesets(commit)
     if gerrit_change_number:
         gerrits.append(Gerrit(changeid=gerrit_change_number, commitid=commit))
+        # gerrits.append(Gerrit(gerrit_change_number, commit))
 print(gerrits)
-print(gerrits[1].commitid)
+for gerrit in gerrits:
+    print("Change '{}' is commit '{}'".format(gerrit.changeid, gerrit.commitid))
 
 print('--------------------')
 
@@ -97,14 +104,6 @@ x = [7, 3, total]
 def totalizer(args):
     return args[2](args[0], args[1])
 print(totalizer(x))
-
-print('--------------------')
-
-a_boolean = 1 == 0
-if a_boolean:
-    print("a_boolean is True")
-else:
-    print("a_boolean is False")
 
 print('--------------------')
 

@@ -8,8 +8,10 @@ import uuid
 def commit_changesets(commit_id):
     return "I{}".format(commit_id[::-1])
 
+
 # Tuple Generator
 def generate_fake_table_row():
+    # This would normally be a more complex test (if any)
     k = 0
     while k <= 10:
         k += 1
