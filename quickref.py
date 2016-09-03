@@ -36,7 +36,8 @@ def filtered_list(list_to_filter):
 
 def zipping(type_list, items_list):
     """
-    DEMONSTRATES: Interweaving elements with zip(), coerced to a dictionary
+    DEMONSTRATES: Interweaving elements with zip(), coerced to a dictionary.
+    The iterator stops when the shortest input iterable is exhausted.
     """
     food_dict = zip(type_list, items_list)
     return dict(food_dict)

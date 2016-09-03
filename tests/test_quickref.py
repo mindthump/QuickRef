@@ -8,6 +8,7 @@ if cmd_parent_folder not in sys.path:
     sys.path.insert(0, cmd_parent_folder)
 from quickref import *
 
+
 # Create some useful variables for tests.
 food_list = [['apples', 'bananas', 'oranges'], ['hamburgers', 'pizza', 'tacos'],
              ['grasshoppers', 'horse', 'eels'], 27.0345, function_reference]
@@ -33,6 +34,7 @@ class TestQuickref(unittest.TestCase):
     def test_zipping(self):
         """
         """
+        # Since there are only three food_types, it will only pick up the first three items in food_list.
         food_types = ['fruit', 'meals', 'weird']
         expected_result = {
             'fruit': ['apples', 'bananas', 'oranges'],
@@ -125,7 +127,8 @@ class TestQuickref(unittest.TestCase):
         # defaultdict takes a callable, which is called with no parameters
         d = collections.defaultdict(lambda: '<missing>')
         d.update(name='John', action='ran')
-        result = "{0[name]} {0[action]} to {0[object]}".format(d)
+        # This also shows unpacking a dict for str.format()
+        result = "{name} {action} to {object}".format(**d)
         self.failIf(result != 'John ran to <missing>')
 
     def test_templates(self):
