@@ -1,20 +1,9 @@
+# coding=utf-8
 import unittest
 import inspect
 import sys, os
 from quickref import *
 from utilities import food_list, test_file_data, function_reference
-
-# Create some useful variables for tests.
-food_list = [['apples', 'bananas', 'oranges'], ['hamburgers', 'pizza', 'tacos'],
-             ['grasshoppers', 'horse', 'eels'], 27.0345, function_reference]
-test_file_data = """klasdflhf
-sdfdsf
-asdfasdf
-asfd
-asdfasdf
-klasdflhf
-asfd
-sdfdsf"""
 
 
 class TestQuickref(unittest.TestCase):
