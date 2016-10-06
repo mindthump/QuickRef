@@ -43,17 +43,6 @@ def zipping(type_list, items_list):
     return dict(food_dict)
 
 
-def function_reference(param1, param2):
-    """
-    DEMONSTRATES: a function reference buried in a list, old-style formatting
-    """
-    total = param1 + param2
-    # trinary(ish)
-    # x = "is" if total > 100 else "is not"
-    # old-style formatting needs a tuple, but see process_file_with_generators() below
-    return "%s plus %s equals %s" % (param1, param2, total)
-
-
 def phonetics(character):
     """
     DEMONSTRATES: mangling strings; dict comprehension, try/catch.

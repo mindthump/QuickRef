@@ -1,13 +1,8 @@
 import unittest
 import inspect
 import sys, os
-
-# Some folderol to get this project's root on the path.
-cmd_parent_folder = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile(inspect.currentframe()))[0], "..")))
-if cmd_parent_folder not in sys.path:
-    sys.path.insert(0, cmd_parent_folder)
 from quickref import *
-
+from utilities import food_list, test_file_data, function_reference
 
 # Create some useful variables for tests.
 food_list = [['apples', 'bananas', 'oranges'], ['hamburgers', 'pizza', 'tacos'],
@@ -49,6 +44,7 @@ class TestQuickref(unittest.TestCase):
         """
         A variable can hold a function reference, and it is called when it looks like a function
         (i.e., with parenthesis and signature-appropriate arguments)
+        The reference used here is set up in the utilities module
         """
         self.assertEqual(food_list[4](32, 76), "32 plus 76 equals 108")
 
@@ -73,6 +69,7 @@ class TestQuickref(unittest.TestCase):
             """
             with open(create_file_name, mode='w') as fw:
                 fw.write(test_file_data)
+
         filename = "test.txt"
         create_test_file(filename)
         self.assertEqual(unique(filename), "asdfasdf asfd klasdflhf sdfdsf")
@@ -102,6 +99,7 @@ class TestQuickref(unittest.TestCase):
 
     def test_walkies(self):
         d = walkies(".")
+        pass
 
     def process_file_with_generators(self):
         pass
@@ -117,8 +115,9 @@ class TestQuickref(unittest.TestCase):
     def test_unique_via_comp(self):
         """ Dictionaries are output by pprint in key order. The options are to keep the output on one line.
         """
-        self.assertEqual("{'ac': 7, 'arcu': 7, 'eget': 10, 'et': 10, 'in': 11, 'mauris': 7, 'nec': 8, 'non': 7, 'vel': 8}",
-                         pprint.pformat(dict(unique_via_comp("../data/lorem.txt")), width=999999))
+        self.assertEqual(
+            "{'ac': 7, 'arcu': 7, 'eget': 10, 'et': 10, 'in': 11, 'mauris': 7, 'nec': 8, 'non': 7, 'vel': 8}",
+            pprint.pformat(dict(unique_via_comp("data/lorem.txt")), width=999999))
 
     def test_default_dict(self):
         """ Note: This test is stand-alone, it has no part in quickref.py
