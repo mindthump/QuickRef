@@ -115,8 +115,7 @@ class TestQuickref(unittest.TestCase):
         # defaultdict takes a callable, which is called with no parameters
         d = collections.defaultdict(lambda: '<missing>')
         d.update(name='John', action='ran')
-        # This also shows unpacking a dict for str.format()
-        result = "{name} {action} to {object}".format(**d)
+        result = "{name} {action} to {object}".format(name=d['name'], action=d['action'], object=d['object'])
         self.failIf(result != 'John ran to <missing>')
 
     def test_templates(self):
