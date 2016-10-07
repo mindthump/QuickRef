@@ -98,11 +98,24 @@ for gerrit in gerrits:
 
 print('--------------------')
 
+
 def total(p1, p2):
+    """
+    Showing a function reference in a list
+    :param p1:
+    :param p2:
+    :return:
+    """
     return p1 + p2
+
+
 x = [7, 3, total]
+
+
 def totalizer(args):
     return args[2](args[0], args[1])
+
+
 print(totalizer(x))
 
 print('--------------------')
