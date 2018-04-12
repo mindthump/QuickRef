@@ -34,7 +34,7 @@ class Deck(object):
         """ Remove a card from the deck and return its value. Users need to watch for an empty deck.
         """
         if len(self.cards) <= 0:
-            raise EmptyDeckError()
+            raise EmptyDeckError("Cannot deal a card, the deck is empty.")
         # Take from the start/top of the deck, pop() default is the end/bottom
         return self.cards.pop(0)
 

@@ -19,7 +19,7 @@ print(bingo)
 # blah = tuple()
 blah = (5, 6, 7, "gort", bingo)
 try:
-    # Even my IDE knows this is an error
+    # My IDE knows this is an error. Does yours? :)
     blah[2] = 15
 except TypeError as te:
     print("Tuples are immutable, they only support count and index.")

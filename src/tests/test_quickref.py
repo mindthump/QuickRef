@@ -1,9 +1,14 @@
 # coding=utf-8
 import unittest
 import inspect
-import sys, os
+import sys
+import os.path
 from quickref import *
 from utilities import food_list, test_file_data, function_reference
+
+# Allows the tests to be run from any directory
+LOREM_TXT_FIILENAME = os.path.dirname(__file__) + "/data/lorem.txt"
+pass
 
 
 class TestQuickref(unittest.TestCase):
@@ -104,9 +109,10 @@ class TestQuickref(unittest.TestCase):
     def test_unique_via_comp(self):
         """ Dictionaries are output by pprint in key order. The options are to keep the output on one line.
         """
+        unique_values_ = unique_via_comp(LOREM_TXT_FIILENAME)
         self.assertEqual(
             "{'ac': 7, 'arcu': 7, 'eget': 10, 'et': 10, 'in': 11, 'mauris': 7, 'nec': 8, 'non': 7, 'vel': 8}",
-            pprint.pformat(dict(unique_via_comp("data/lorem.txt")), width=999999))
+            pprint.pformat(dict(unique_values_), width=999999))
 
     def test_default_dict(self):
         """ Note: This test is stand-alone, it has no part in quickref.py

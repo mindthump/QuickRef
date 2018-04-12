@@ -1,4 +1,5 @@
 """ An example Python script
+BTW, Running this directly doesn't actually _do_ anything.
 """
 
 import sys
@@ -285,6 +286,7 @@ def count_unique(m):
 
 def unique_via_comp(file_name):
     """
+    Uses file context manager ("with open(<file-name>) as <file-descriptor>...")
     """
     c = collections.Counter()
     with open(file_name) as f:
