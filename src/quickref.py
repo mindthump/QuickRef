@@ -172,14 +172,23 @@ def permute(n, array):
 
 def subprocess_ls():
     """
-    Run a simple subprocess. The test is meaningless
-    because 'ls' output is unpredictable.
+    Run a simple subprocess.
     Note: subprocess returns bytes (not str) unless "universal_newlines=True"
     DEMONSTRATES: subprocess (to run system commands).
     """
-    foo = subprocess.check_output(['ls', '-l'], universal_newlines=True)
+    foo = subprocess.check_output(['ls', '-al'], universal_newlines=True)
     x = foo.splitlines()
-    pprint.pprint(x)
+    # pprint.pprint(x)
+    return x
+
+
+def print_something():
+    """
+    Just print some strings to stdout
+    DEMONSTRATES: Mocking that captures stdout.
+    """
+    print("This is the mock/patch part of the test.")
+    print("This output will be caught by the capsys fixture.")
 
 
 def walkies(root):
@@ -201,8 +210,7 @@ def walkies(root):
 
 
 def process_file_with_generators():
-    """ Look at generators expressions. I wish I had reviewed this more before the interview :(
-    DEMONSTRATES: generator expressions, print.format with tuple.
+    """ DEMONSTRATES: generator expressions, print.format with tuple.
     >>> process_file_with_generators() # doctest: +ELLIPSIS
     0: 4853
     1: 4991
