@@ -9,7 +9,6 @@ import doctest
 
 
 def main():
-    # doctest.testmod(verbose=True)
     pprint.pprint(['{} = "{}"'.format(k, v) for k, v in os.environ.items()], width=99)
 
 

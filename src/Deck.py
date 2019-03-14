@@ -47,8 +47,11 @@ class Deck(object):
             self.cards.extend(cards)
 
     def stack_the_deck(self):
-        """ BONUS! A card trick deck setup. Search for "eight kings chased" to see what it means.
-        Stacking the deck always builds an entire deck!
+        """
+        BONUS! A card pseudo-memorized deck setup. Search for "eight
+        kings chased" to see what it means: "Eight Kings threatened to
+        save 95 Queens for one sick Knave." Stacking the deck always
+        builds an entire deck!
         DEMONSTRATES: itertools.cycle, list.append.
         """
         stacked_deck = []

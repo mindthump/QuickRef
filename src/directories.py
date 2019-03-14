@@ -1,5 +1,7 @@
-import os, sys
+import os
+import sys
+from pathlib import Path
 print(sys.version)
-print("Current script's path: %s" % os.path.dirname(os.path.abspath(__file__)))
-print("Current working directory: %s" % os.getcwd())
-print("Current directory contents: %s" % os.listdir("."))
+print("Current script's path: {}".format(Path(__file__).resolve()))
+print("Current working directory: {}".format(os.getcwd()))
+print("Current directory contents: {}".format(os.listdir(".")))
