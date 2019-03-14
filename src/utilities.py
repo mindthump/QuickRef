@@ -22,7 +22,7 @@ def generate_fake_table_row():
     while k <= 10:
         k += 1
         c = uuid.uuid4()
-        a = ''.join(choice(ascii_uppercase) for i in range(5))
+        a = "".join(choice(ascii_uppercase) for i in range(5))
         b = randint(1, 1000)
         yield (k, a, b, c)
 
@@ -35,12 +35,17 @@ def function_reference(param1, param2):
     # trinary(ish)
     # x = "is" if total > 100 else "is not"
     # old-style formatting needs a tuple, but see process_file_with_generators() below
-    return "%s plus %s equals %s" % (param1, param2, total)
+    return "{} plus {} equals {}".format(param1, param2, total)
 
 
 # Create some useful variables for tests.
-food_list = [['apples', 'bananas', 'oranges'], ['hamburgers', 'pizza', 'tacos'],
-             ['grasshoppers', 'horse', 'eels'], 27.0345, function_reference]
+food_list = [
+    ["apples", "bananas", "oranges"],
+    ["hamburgers", "pizza", "tacos"],
+    ["grasshoppers", "horse", "eels"],
+    27.0345,
+    function_reference,
+]
 test_file_data = """klasdflhf
 sdfdsf
 asdfasdf

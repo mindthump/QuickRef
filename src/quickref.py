@@ -25,7 +25,7 @@ def string_demo(parameter):
     """
     DEMONSTRATES: Mixed single/double quote, formatting, concatenation, repetition.
     """
-    return "Welcome to {name}'s".format(name=parameter) + " World" + '!' * 3
+    return "Welcome to {name}'s".format(name=parameter) + " World" + "!" * 3
 
 
 def filtered_list(list_to_filter):
@@ -60,7 +60,7 @@ def phonetics(character):
         c = translation[character]
         return c
     except KeyError:
-        return '$$ ERROR: character not found.'
+        return "$$ ERROR: character not found."
 
 
 def significant(s_list):
@@ -68,8 +68,9 @@ def significant(s_list):
     DEMONSTRATES: comprehensions with conditionals, for/else.
     """
     result = ""
-    for word in [x.split()[1] for x in phonetic_alphabet.splitlines() if
-                 x.split()[0] in s_list]:
+    for word in [
+        x.split()[1] for x in phonetic_alphabet.splitlines() if x.split()[0] in s_list
+    ]:
         result += word + " "
     else:
         result += ": and 'else' was executed."
@@ -81,7 +82,7 @@ def unique(filename):
     DEMONSTRATES: set comprehension to eliminate duplicates, simple file read, try/catch (missing file exception).
     """
     try:
-        with open(os.path.join(os.getcwd(), filename), 'r') as fr:
+        with open(os.path.join(os.getcwd(), filename), "r") as fr:
             ulines = {line.strip() for line in fr}
         return " ".join(sorted(ulines))
     except IOError:
@@ -93,8 +94,8 @@ def encode_rownum(row_number_to_encode):
     DEMONSTRATES: recursion, divmod to get both integer quotient and remainder
     """
     if row_number_to_encode == 0:
-        return '0'
-    encoded_url = ''
+        return "0"
+    encoded_url = ""
     base = len(alphabet)
     while row_number_to_encode:
         q, r = divmod(row_number_to_encode, base)
@@ -115,7 +116,7 @@ def decode_url(str_to_decode):
         char_to_decode = str_to_decode[-1]
         str_to_decode = str_to_decode[:-1]
         idx = alphabet.index(char_to_decode)
-        rownum += (pow(62, i) * idx)
+        rownum += pow(62, i) * idx
         i += 1
     return rownum
 
@@ -124,10 +125,10 @@ def fibonacci():
     """ Use the fibonacci_generator() to get one element at a time.
     DEMONSTRATES: using generator functions
     """
-    outstr = ''
+    outstr = ""
     for f in fibonacci_generator():
         if f <= 100:
-            outstr += str(f) + ' '
+            outstr += str(f) + " "
         else:
             break
     # remove trailing space
@@ -176,7 +177,7 @@ def subprocess_ls():
     Note: subprocess returns bytes (not str) unless "universal_newlines=True"
     DEMONSTRATES: subprocess (to run system commands).
     """
-    foo = subprocess.check_output(['ls', '-al'], universal_newlines=True)
+    foo = subprocess.check_output(["ls", "-al"], universal_newlines=True)
     x = foo.splitlines()
     # pprint.pprint(x)
     return x
@@ -198,7 +199,7 @@ def walkies(root):
     :return: [(path, [dirs], [files]), ...]
     """
     contents = []
-    excluded_dirs = (".git", ".idea", "__pycache__",)
+    excluded_dirs = (".git", ".idea", "__pycache__")
     # "tree" is a generator
     tree = os.walk(root, topdown=True)
     for root, dirs, files in tree:
@@ -228,8 +229,8 @@ def process_file_with_generators():
         # The inner generator breaks the line by commas and returns the first element,
         # the outer generator breaks that by dashes and returns the third element
         # The 'next' outers and inners are produced only when they are actually used
-        inner = (line.split(',')[0] for line in data_file)
-        outer = (line.split('-')[2] for line in inner)  # Nested generator
+        inner = (line.split(",")[0] for line in data_file)
+        outer = (line.split("-")[2] for line in inner)  # Nested generator
         # Enumerate returns two values (index, value) but since we only supply
         # one variable name it is stored as a tuple. The new-style string format
         # requires the tuple to be unpacked with "*".
@@ -271,10 +272,10 @@ def elgoog(string_to_reverse):
 
     r1 = concat_before_start
     r2 = negative_slice
-    r3 = ''.join(cheating)
-    r4 = ''.join(insert_at_front_of_list)
-    r5 = ''.join(slice_into_front_of_list)
-    r6 = ''.join(reverse_as_list)
+    r3 = "".join(cheating)
+    r4 = "".join(insert_at_front_of_list)
+    r5 = "".join(slice_into_front_of_list)
+    r6 = "".join(reverse_as_list)
     return "{}|{}|{}|{}|{}|{}".format(r1, r2, r3, r4, r5, r6)
 
 
@@ -302,17 +303,18 @@ def unique_via_comp(file_name):
             w = re.findall(r"[\w']+", l)
             c.update(w)
     # There must be a way to avoid these from being collected
-    del c['']
+    del c[""]
     return c.most_common(9)
 
 
 def template_substitute(noun, adjective):
-    input = string.Template('My ${zzz} is a ${qqq} ${zzz}.')
-    full = input.substitute({'zzz': noun, 'qqq': adjective})
-    partial = string.Template(input.safe_substitute(zzz=noun))
+    template_input = string.Template("My ${zzz} is a ${qqq} ${zzz}.")
+    full = template_input.substitute({"zzz": noun, "qqq": adjective})
+    partial = string.Template(template_input.safe_substitute(zzz=noun))
     partial_completed = partial.substitute(qqq=adjective)
     return full, partial_completed
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    contents = walkies(".")
     sys.exit()
