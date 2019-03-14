@@ -1,12 +1,8 @@
 # coding=utf-8
 import sys
 import os.path
-from pathlib2 import Path
-
-# To get at parent dir packages
-# sys.path.append(str(Path("..").resolve()))
 from src.quickref import *
-from src.utilities import food_list, test_file_data, function_reference
+from src.utilities import food_list, test_file_data
 
 # Allows the tests to be run from any directory
 LOREM_TXT_FIILENAME = os.path.dirname(__file__) + "/data/lorem.txt"
