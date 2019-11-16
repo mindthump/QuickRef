@@ -1,10 +1,10 @@
 __author__ = 'ed'
 
+"""This does not (yet) work in my basic docker"""
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import ddt
 
-browser = webdriver.Firefox()
+browser = webdriver.Chrome()
 
 browser.get("http://demo.magentocommerce.com/")
 

@@ -1,5 +1,7 @@
 # coding=utf-8
 
+from __future__ import print_function
+from builtins import object
 class Seaman(object):
     """
     A Superclass, provides default fields and methods
@@ -24,7 +26,7 @@ class Seaman(object):
         return self.data['name']
 
     def talk(self):
-        print "{} says: {}".format(self.name, self.sound)
+        print("{} says: {}".format(self.name, self.sound))
 
 
 class Sailor(Seaman):

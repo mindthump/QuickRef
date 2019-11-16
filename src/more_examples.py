@@ -1,8 +1,7 @@
-from __future__ import print_function
-import this
+# import this
 from collections import defaultdict, namedtuple
 # Don't do this: from utilities import *
-from utilities import commit_changesets, generate_fake_table_row
+from utilities import generate_fake_table_row
 
 panagram = "Mr. Jock, TV quiz PhD, bags few lynx."
 
@@ -52,7 +51,7 @@ print(some_data)
 try:
     bad = some_data['x']
 except KeyError as ke:
-    print("No such key: {}".format(ke.message))
+    print("No such key: {}".format(ke))
 # Default can be almost anything
 better = some_data.get('x', "OK")
 print("x is now {}".format(better))
@@ -82,22 +81,6 @@ else:
 
 print('--------------------')
 
-commit_ids = ['74e041d3', '3bea427e', 'd1dbc75']
-Gerrit = namedtuple('Gerrit', 'changeid commitid')
-gerrits = []
-
-for commit in commit_ids or []:
-    # if commit_ids is "falsey", it's not iterable!
-    gerrit_change_number = commit_changesets(commit)
-    if gerrit_change_number:
-        gerrits.append(Gerrit(changeid=gerrit_change_number, commitid=commit))
-        # gerrits.append(Gerrit(gerrit_change_number, commit))
-print(gerrits)
-for gerrit in gerrits:
-    print("Change '{}' is commit '{}'".format(gerrit.changeid, gerrit.commitid))
-
-print('--------------------')
-
 
 def total(p1, p2):
     """
@@ -122,9 +105,11 @@ print('--------------------')
 
 x = "good"
 y = "string"
+f = "fstring"
 print("This is " + x)
 print("This is a %s %s" % (x, y))
 print("This is a {} {}".format(x, y))
+print(f"This is a {x} {f}")
 print("This is a {adjective} {noun}".format(adjective=x, noun=y))
 d = {'noun': y, 'adjective': x}
 print("This is a {adjective} {noun}".format(**d))

@@ -1,17 +1,7 @@
-from __future__ import print_function
+from builtins import range
 from random import choice, randint
 from string import ascii_uppercase
 import uuid
-
-
-def commit_changesets(commit_id):
-    """
-    Fake a Gerrit change-set Id.
-    It simply reverses the string and prepends "I".
-    :param commit_id:
-    :return:
-    """
-    return "I{}".format(commit_id[::-1])
 
 
 def generate_fake_table_row():

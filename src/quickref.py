@@ -1,7 +1,11 @@
 """ An example Python script
 BTW, Running this directly doesn't actually _do_ anything.
 """
+from __future__ import print_function
 
+from builtins import zip
+from builtins import str
+from builtins import range
 import sys
 import os
 import subprocess
@@ -40,7 +44,7 @@ def zipping(type_list, items_list):
     DEMONSTRATES: Interweaving elements with zip(), coerced to a dictionary.
     The iterator stops when the shortest input iterable is exhausted.
     """
-    food_dict = zip(type_list, items_list)
+    food_dict = list(zip(type_list, items_list))
     return dict(food_dict)
 
 
