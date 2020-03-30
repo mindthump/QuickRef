@@ -7,14 +7,14 @@ import uuid
 def generate_fake_table_row():
     """
     Tuple Generator
+    When it falls through the end of the function, a
+    StopException is raised to signal the caller we're done
     """
-    k = 0
-    while k <= 10:
-        k += 1
+    for k in range(10):
         c = uuid.uuid4()
         a = "".join(choice(ascii_uppercase) for i in range(5))
         b = randint(1, 1000)
-        yield (k, a, b, c)
+        yield k, a, b, c
 
 
 def function_reference(param1, param2):

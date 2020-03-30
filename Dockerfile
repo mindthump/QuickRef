@@ -16,7 +16,7 @@ ENV APPDIR="/app"
 WORKDIR ${APPDIR}
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir --disable-pip-version-check -r requirements.txt
+#RUN pip install --no-cache-dir --disable-pip-version-check -r requirements.txt
 
 COPY src src
 COPY tests tests

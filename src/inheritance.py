@@ -1,8 +1,9 @@
 # coding=utf-8
 
 from __future__ import print_function
-from builtins import object
-class Seaman(object):
+
+
+class Seaman:
     """
     A Superclass, provides default fields and methods
     """
@@ -31,17 +32,17 @@ class Seaman(object):
 
 class Sailor(Seaman):
     def __init__(self, name):
-        super(Sailor, self).__init__(name)
+        super().__init__(name)
         self.sound = "Hoist the Mainsail!"
 
 
 class Pirate(Seaman):
     def __init__(self, name):
-        super(Pirate, self).__init__(name)
+        super().__init__(name)
         self.sound = "Aaarrrgggh!"
 
     def talk(self, loud=False):
-        super(Pirate, self).talk()
+        super().talk()
         if loud:
             print("...AND A YO HO HO!!!")
 

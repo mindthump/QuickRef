@@ -10,8 +10,10 @@ def dumpenv():
 
 
 def main():
-    env_list = dumpenv()
-    print(env_list)
+    v = ['p', 'y', 't', 'h', 'o', 'n']
+    pprint.pprint(v[:])
+    # env_list = dumpenv()
+    # print(env_list)
 
 
 if __name__ == '__main__':

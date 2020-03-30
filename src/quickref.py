@@ -1,15 +1,12 @@
 """ An example Python script
 BTW, Running this directly doesn't actually _do_ anything.
 """
-from __future__ import print_function
-
 from builtins import zip
 from builtins import str
 from builtins import range
 import sys
 import os
 import subprocess
-import pprint
 import collections
 import re
 import string
@@ -229,7 +226,7 @@ def process_file_with_generators():
     56: 4842
     57: 4205
     """
-    with open("data/test_data.csv") as data_file:
+    with open("tests/data/test_data.csv") as data_file:
         # The inner generator breaks the line by commas and returns the first element,
         # the outer generator breaks that by dashes and returns the third element
         # The 'next' outers and inners are produced only when they are actually used

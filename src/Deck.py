@@ -37,6 +37,7 @@ class Deck(object):
     def deal_one_card(self):
         """ Remove a card from the deck and return its value. Users need to watch for an empty deck.
         """
+        # FIXME: This should use try/catch for the pop() - EAFTP
         if len(self.cards) <= 0:
             raise EmptyDeckError("Cannot deal a card, the deck is empty.")
         # Take from the start/top of the deck, pop() default is the end/bottom
