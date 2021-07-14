@@ -162,7 +162,7 @@ def permute(n, array):
     if n == 1:
         pass
         # TODO: yield? It seems to be very complex with recursion.
-        print(array)
+        # print(array)
     else:
         for i in range(0, n):
             # Recurse, permuting the first through (n-1)th elements
