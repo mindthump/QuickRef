@@ -1,17 +1,18 @@
 # import this
 from collections import defaultdict, namedtuple
+
 # Don't do this: from utilities import *
 from utilities import generate_fake_table_row
 
 panagram = "Mr. Jock, TV quiz PhD, bags few lynx."
 
-print('--------------------')
+print("--------------------")
 
 # What kinds of objects are in bingo?
-bingo = [('a', 1), ('b', 2), ('a', 3), ('c', 2), ('b', 5), ('b', 5)]
+bingo = [("a", 1), ("b", 2), ("a", 3), ("c", 2), ("b", 5), ("b", 5)]
 print("bingo has {} elements.".format(len(bingo)))
 print(type(bingo[0]))
-bingo[2] = ('a', 7)
+bingo[2] = ("a", 7)
 print(bingo)
 
 # Why is this useless?
@@ -33,7 +34,7 @@ for b in bingo:
 print("bongo has {} elements, all unique.".format(len(bongo)))
 
 try:
-    bongo[2] = ('a', 7)
+    bongo[2] = ("a", 7)
 except TypeError as te:
     # Sets are mutable, but you can't assign to a particular
     # set item... you need to let the set handle it with add.
@@ -44,34 +45,34 @@ for t in generate_fake_table_row():
 
 # Why does mutability matter?
 
-print('--------------------')
+print("--------------------")
 
-some_data = {'y': "One", 'z': "Two"}
+some_data = {"y": "One", "z": "Two"}
 print(some_data)
 try:
-    bad = some_data['x']
+    bad = some_data["x"]
 except KeyError as ke:
     print("No such key: {}".format(ke))
 # Default can be almost anything
-better = some_data.get('x', "OK")
+better = some_data.get("x", "OK")
 print("x is now {}".format(better))
 
-print('--------------------')
+print("--------------------")
 
 # Default is an empty list
 foo = defaultdict(list)
 for k, v in bingo:
     foo[k].append(v)
 print(foo)
-print(foo['x'])
+print(foo["x"])
 
-print('--------------------')
+print("--------------------")
 
 # Falsey-ness
-x = "All of these are false."
+falseyness_result = "All of these are false."
 if [] or {} or set() or () or "" or 0 or None or False:
-    x = "At least one of these is true."
-print(x)
+    falseyness_result = "At least one of these is true."
+print(falseyness_result)
 
 a_boolean = 1 == 0
 if a_boolean:
@@ -79,7 +80,7 @@ if a_boolean:
 else:
     print("a_boolean is False")
 
-print('--------------------')
+print("--------------------")
 
 
 def total(p1, p2):
@@ -92,28 +93,30 @@ def total(p1, p2):
     return p1 + p2
 
 
-x = [7, 3, total]
+list_with_function = [7, 3, total]
 
 
 def totalizer(args):
     return args[2](args[0], args[1])
 
 
-print(totalizer(x))
+print(f'total of list with function element: {totalizer(list_with_function)}')
 
-print('--------------------')
+print("--------------------")
 
-x = "good"
-y = "string"
-f = "fstring"
-print("This is " + x)
-print("This is a %s %s" % (x, y))
-print("This is a {} {}".format(x, y))
-print(f"This is a {x} {f}")
-print("This is a {adjective} {noun}".format(adjective=x, noun=y))
-d = {'noun': y, 'adjective': x}
+good_str = "good"
+string_str = "string"
+fstring_str = "fstring"
+print("This is " + good_str)
+print("This is a %s %s" % (good_str, string_str))
+print("This is a {} {}".format(good_str, string_str))
+print(f"This is a {good_str} {fstring_str}")
+print("This is a {adjective} {noun}".format(adjective=good_str, noun=string_str))
+d = {"noun": string_str, "adjective": good_str}
 print("This is a {adjective} {noun}".format(**d))
 
 long_message = """This is a very\n{} multi-line {} with
-{} formatting.""".format(x, y, 'complex')
+{} formatting.""".format(
+    good_str, string_str, "complex"
+)
 print(long_message)

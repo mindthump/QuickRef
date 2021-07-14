@@ -9,11 +9,13 @@ import collections
 
 
 class Deck(object):
-    """ A deck of cards, each represented by a suit and a rank character.
-    The deck is originally in standard new-deck sort order. Since cards are
-    removed as they are dealt, they can run out; this is indicated by a
-    'EmptyDeckError' exception. The user needs to replace the cards or
-    re-initialize it during a shuffle.
+    """ A deck of cards, each represented by a suit and a rank
+    character. The deck is originally in standard (European) new-deck
+    sort order (1). Since cards are removed as they are dealt, they can
+    run out; this is indicated by a 'EmptyDeckError' exception. The user
+    needs to replace the cards or re-initialize it during a shuffle.
+
+    (1) American decks reverse-sort the second half.
     """
 
     def __init__(self):
@@ -37,7 +39,6 @@ class Deck(object):
     def deal_one_card(self):
         """ Remove a card from the deck and return its value. Users need to watch for an empty deck.
         """
-        # FIXME: This should use try/catch for the pop() - EAFTP
         if len(self.cards) <= 0:
             raise EmptyDeckError("Cannot deal a card, the deck is empty.")
         # Take from the start/top of the deck, pop() default is the end/bottom
@@ -53,15 +54,17 @@ class Deck(object):
 
     def stack_the_deck(self):
         """
-        BONUS! A card pseudo-memorized deck setup. Search for "eight
-        kings chased" to see what it means: "Eight Kings threatened to
-        save 95 Queens for one sick Knave." Stacking the deck always
-        builds an entire deck!
+        BONUS! A card pseudo-memorized deck setup. "Eight Kings
+        threatened to save 95 Queens for one sick Knave." Stacking
+        the deck always builds an entire deck! (Reference:
+        https://sistebbins.com/eight-kings-card-stack.html)
         DEMONSTRATES: itertools.cycle, list.append.
         """
         stacked_deck = []
         suits = itertools.cycle("CHSD")
-        ranks = itertools.cycle(['8', 'K', '3', 'T', '2', '7', '9', '5', 'Q', '4', 'A', '6', 'J'])
+        ranks = itertools.cycle(
+            ["8", "K", "3", "T", "2", "7", "9", "5", "Q", "4", "A", "6", "J"]
+        )
         for card in range(52):
             stacked_deck.append(str(next(ranks)) + str(next(suits)))
         self.cards = stacked_deck

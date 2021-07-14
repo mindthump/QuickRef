@@ -9,22 +9,19 @@ class Seaman:
     """
 
     def __init__(self, name):
-        self.data = {
-            'name': name,
-            'sound': "Land Ho!"
-        }
+        self.data = {"name": name, "sound": "Land Ho!"}
 
     @property
     def sound(self):
-        return self.data['sound']
+        return self.data["sound"]
 
     @sound.setter
     def sound(self, value):
-        self.data['sound'] = value
+        self.data["sound"] = value
 
     @property
     def name(self):
-        return self.data['name']
+        return self.data["name"]
 
     def talk(self):
         print("{} says: {}".format(self.name, self.sound))
@@ -47,12 +44,12 @@ class Pirate(Seaman):
             print("...AND A YO HO HO!!!")
 
 
-if __name__ == '__main__':
-    the_pirate = Pirate('Peg-leg Pete')
+if __name__ == "__main__":
+    the_pirate = Pirate("Peg-leg Pete")
     the_pirate.talk()
     kidd = Pirate("Captain Kidd")
     kidd.talk(True)
-    the_sailor = Sailor('Billy Budd')
+    the_sailor = Sailor("Billy Budd")
     the_sailor.talk()
     popeye = Sailor("Popeye")
     popeye.sound = "I yam what I yam!"

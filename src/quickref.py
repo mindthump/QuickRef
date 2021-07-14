@@ -24,9 +24,10 @@ Victor Whiskey X-ray Yankee Zulu"""
 
 def string_demo(parameter):
     """
-    DEMONSTRATES: Mixed single/double quote, formatting, concatenation, repetition.
+    DEMONSTRATES: Mixed single/double quote, f-strings, concatenation, repetition.
     """
-    return "Welcome to {name}'s".format(name=parameter) + " World" + "!" * 3
+    # return "Welcome to {name}'s".format(name=parameter) + " World" + "!" * 3
+    return f"Welcome to {parameter}'s" + " World" + "!" * 3
 
 
 def filtered_list(list_to_filter):
@@ -161,7 +162,7 @@ def permute(n, array):
     if n == 1:
         pass
         # TODO: yield? It seems to be very complex with recursion.
-        # print(array)
+        print(array)
     else:
         for i in range(0, n):
             # Recurse, permuting the first through (n-1)th elements
@@ -317,5 +318,6 @@ def template_substitute(noun, adjective):
 
 
 if __name__ == "__main__":
-    contents = walkies(".")
+    # contents = walkies(".")
+    permute(4, list('ABCD'))
     sys.exit()

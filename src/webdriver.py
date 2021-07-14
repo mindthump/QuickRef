@@ -1,4 +1,4 @@
-__author__ = 'ed'
+__author__ = "ed"
 
 """This does not (yet) work in my basic docker"""
 from selenium import webdriver
@@ -8,7 +8,7 @@ browser = webdriver.Chrome()
 
 browser.get("http://demo.magentocommerce.com/")
 
-assert 'Madison Island' in browser.title
+assert "Madison Island" in browser.title
 
 query_input = browser.find_element_by_id("search")
 query_input.send_keys("earbuds" + Keys.RETURN)
