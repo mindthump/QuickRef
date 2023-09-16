@@ -42,8 +42,8 @@ def zipping(type_list, items_list):
     DEMONSTRATES: Interweaving elements with zip(), coerced to a dictionary.
     The iterator stops when the shortest input iterable is exhausted.
     """
-    food_dict = list(zip(type_list, items_list))
-    return dict(food_dict)
+    indexed_list_of_lists = list(zip(type_list, items_list))
+    return dict(indexed_list_of_lists)
 
 
 def phonetics(character):
